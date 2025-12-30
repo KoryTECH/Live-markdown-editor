@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Markdown Editor</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <header>
+      <span class="name"> Live Markdown Editor</span>
+      <span class="header-btns">
+        <button type="button" class="export" id="html">
+          <i class="fa-solid fa-code"></i>Export HTML
+        </button>
+        <button type="button" class="export" id="md">
+          <i class="fa-solid fa-download"></i>Export MD
+        </button>
+        <button type="button" class="theme">🔆</button>
+      </span>
+    </header>
+    <div class="toolbar">
+      <div class="markdown-toolbar">
+        <button class="toolbar-btn" data-action="bold" title="Bold">
+          <i class="fa-solid fa-bold"></i>
+        </button>
+        <button class="toolbar-btn" data-action="italic" title="Italic">
+          <i class="fa-solid fa-italic"></i>
+        </button>
+        <button class="toolbar-btn" data-action="h1" title="Heading 1">
+          H1
+        </button>
+        <button class="toolbar-btn" data-action="h2" title="Heading 2">
+          H2
+        </button>
+        <button class="toolbar-btn" data-action="ul" title="Bullet List">
+          <i class="fa-solid fa-list"></i>
+        </button>
+        <button class="toolbar-btn" data-action="ol" title="Numbered List">
+          <i class="fa-solid fa-list-ol"></i>
+        </button>
+        <button class="toolbar-btn" data-action="code" title="Code Block">
+          <i class="fa-solid fa-code"></i>
+        </button>
+        <button class="toolbar-btn" data-action="link" title="Link">
+          <i class="fa-solid fa-link"></i>
+        </button>
+        <button class="toolbar-btn" data-action="img" title="Image">
+          <i class="fa-solid fa-image"></i>
+        </button>
+      </div>
+      <div class="preview-toolbar"><h3>PREVIEW</h3></div>
+    </div>
+    <div class="input-preview">
+      <textarea id="editor" placeholder="Start typing...">
+            # welcome to the Live Markdown Editor
+
+            This is a **split-screen** editor designed for productivity.
+
+            ## Features 
+
+            - Real-time preview
+            - Syntax highlighting
+            - Modern interface 
+
+            Start typing on the left, and see the result on the right!
+        </textarea
+      >
+      <iframe id="preview-page"></iframe>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
