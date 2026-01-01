@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Live Markdown Editor</title>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
@@ -17,10 +16,10 @@
       <span class="name"> Live Markdown Editor</span>
       <span class="header-btns">
         <button type="button" class="export" id="html">
-          <i class="fa-solid fa-code"></i>Export HTML
+          <i class="fa-solid fa-code"></i> Export HTML
         </button>
         <button type="button" class="export" id="md">
-          <i class="fa-solid fa-download"></i>Export MD
+          <i class="fa-solid fa-download"></i> Export MD
         </button>
         <button type="button" class="theme">🔆</button>
       </span>
@@ -58,22 +57,11 @@
       <div class="preview-toolbar"><h3>PREVIEW</h3></div>
     </div>
     <div class="input-preview">
-      <textarea id="editor" placeholder="Start typing...">
-# Welcome to the Live Markdown Editor
-
-This is a **split-screen** editor designed for productivity.
-
-## Features 
-- Real-time preview
-- Syntax highlighting
-- Modern interface 
-
-Start typing on the left, and see the result on the right!
-
-        </textarea
+      <textarea id="editor" placeholder="Start typing..."></textarea
       >
       <iframe id="preview-page"></iframe>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
