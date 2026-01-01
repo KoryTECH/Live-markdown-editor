@@ -7,11 +7,12 @@ const preview = document.getElementById('preview-page');
 function updatePreview(){
     // get text from text area
     const markDownText = editor.value;
-    console.log("Markdown text:", markDownText);
-// convert the text from textarea to marked.js
+   
+    // convert the text from textarea to marked.js
     const output = marked.parse(markDownText);
     console.log("HTML output:", output);
-
+    // check if iframe classList is light-theme
+    const isLightTheme = document.body.classList.contains("light-theme");
     const previewContent = `
         <!DOCTYPE html>
         <html>
@@ -56,15 +57,42 @@ function updatePreview(){
                     margin-left: 0;
                     color: #b8d4b8;
                 }
+                body.light-theme {
+                     
+                    background: rgb(233, 233, 233);
+                    color: brown;
+                
+                }
+                    
             </style>
         </head>
-        <body>
+        <body class="${isLightTheme ? 'light-theme' : ''}">
             ${output}
         </body>
         </html>`;
-
     preview.srcdoc = previewContent;
+    console.log("Markdown text:", markDownText);
+    // save to Local storage
+    localStorage.setItem('editorContent', markDownText);
+    
 }
 editor.addEventListener("input",updatePreview)
 
+
+console.log("checking for saved content.....")
+let savedContent  = localStorage.getItem('editorContent');
+if(savedContent) {
+    editor.value = savedContent;
+    updatePreview();
+}
 updatePreview()
+
+const themeToggle = document.querySelector(".theme");
+
+themeToggle.addEventListener("click", function(){
+    document.body.classList.toggle("light-theme");
+    updatePreview()
+
+    // const iframeDoc = preview.contentDocument;
+    // iframeDoc.body.classList.toggle('light-theme')
+})
