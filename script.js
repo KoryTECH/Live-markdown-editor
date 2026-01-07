@@ -4,12 +4,15 @@ const editor = document.getElementById('editor');
 
 const preview = document.getElementById('preview-page');
 
+
+
 function updatePreview(){
+
     // get text from text area
     const markDownText = editor.value;
-   
-    // convert the text from textarea to marked.js
-    const output = marked.parse(markDownText);
+   const output = marked.parse(markDownText);
+
+
     console.log("HTML output:", output);
     // check if iframe classList is light-theme
     const isLightTheme = document.body.classList.contains("light-theme");
@@ -58,7 +61,6 @@ function updatePreview(){
                     color: #b8d4b8;
                 }
                 body.light-theme {
-                     
                     background: rgb(233, 233, 233);
                     color: brown;
                 
@@ -79,6 +81,7 @@ function updatePreview(){
 editor.addEventListener("input",updatePreview)
 
 
+//  to upload the saved content from local storage
 console.log("checking for saved content.....")
 let savedContent  = localStorage.getItem('editorContent');
 if(savedContent) {
@@ -87,6 +90,9 @@ if(savedContent) {
 }
 updatePreview()
 
+
+
+// light theme toogle 
 const themeToggle = document.querySelector(".theme");
 
 themeToggle.addEventListener("click", function(){
@@ -95,4 +101,23 @@ themeToggle.addEventListener("click", function(){
 
     // const iframeDoc = preview.contentDocument;
     // iframeDoc.body.classList.toggle('light-theme')
+})
+
+
+
+
+// bold button function 
+const boldBtn = document.querySelector('[title ="bold"]')
+
+boldBtn.addEventListener("click", function(){
+    // get the beginning of the selection
+    let start = editor.selectionStart
+    // get the end of the selection
+    let end = editor.selectionEnd
+
+    let selectedText = editor.value.substring(start, end)
+
+    let boldedText = `**${selectedText}**`
+
+    editor.value = boldedText ;
 })
