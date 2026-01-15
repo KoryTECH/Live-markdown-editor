@@ -1,0 +1,179 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+ body{
+    background: #0a0f0a;
+} 
+header {
+    background: #0f140f;
+    height: 75px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+.name {
+    color: white;
+    font-size: 1.5rem;
+    font-family: sans-serif;
+    font-weight: 700;
+}
+.header-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+.export {
+    background: #3dd68c;
+    border: none;
+    width: 170px;
+    height: 50px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    padding: 10px;
+}
+#md {
+    background: #2a3f2a;
+    color: white;
+}
+.theme {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    border-left: 1px solid white;
+    padding-left: 20px;
+    
+}
+.main {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+.editor-side {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+.preview-side {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+.editor-toolbar {
+    background: #213f2a;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    text-align: left;
+    gap: 20px;
+    width: 100%;
+}
+.toolbar-btn {
+    background: transparent;
+    color: white;
+    border: none;
+}
+.toolbar-btn:active {
+    transform: scale(1.5);
+} 
+textarea {
+    background: #1a1f1a;
+    width: 100%;
+    min-height: 100vh;
+    outline: none;
+    border: none;
+    color: white;
+    padding: 20px;
+}
+.preview-page,h3 {
+    background: #161f16;
+    height: 60px;
+    width: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    text-align: left;
+    font-family: sans-serif;
+}
+#preview-page {
+    background: #0d120d;
+    width: 100%;
+    min-height: 100vh;
+    color: white;
+    border: none;
+}
+
+.light-theme {
+ 
+    header {
+        background: white;
+        color: black;
+        border: 1px solid black;
+    }
+    .name {
+        color: #0a0f0a;
+    }
+    .export, #md {
+        width: 170px;
+        background: gray;
+        color: white;
+    }
+    .theme {
+        color: black;
+    }
+    .editor-toolbar, .preview-page, h3 {
+        background: rgb(197, 197, 197);
+        color: white;
+        height: 60px;
+        border: 1px solid black;
+    }
+    .toolbar-btn {
+        color: white;
+    }
+    textarea {
+        background: rgb(233, 233, 233);
+        color: brown;
+        border: 1px solid black;
+    }
+    #preview-page {
+        background: rgb(197, 197, 197);
+        color: brown;
+        border: 1px solid black;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 50%;
+        gap: 20px;
+    }
+    .name {
+        text-align: left;
+        width: 320px;
+        padding-left: 20px;
+    }
+    .header-btns {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .main {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .preview-side,.editor-side {
+        width: 100%;
+    }
+}
