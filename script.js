@@ -254,12 +254,3 @@ exportMdBtn.addEventListener('click', function() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 });
-onst url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'document.md';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-});
