@@ -4,6 +4,7 @@
 const loadingPage = document.getElementById("welcomePage");
 const homePage = document.getElementById("editorHomePage");
 const markdownPage = document.getElementById("markdownInterface");
+const newFileBtn = document.querySelectorALL()
 
 homePage.classList.add("hidden");
 markdownPage.classList.add("hidden");
@@ -19,3 +20,6 @@ setTimeout(
 );
 
 
+function createNewFilefunc () {
+
+}
