@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scribe markdown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+    .hidden{
+        display: none;
+    }
+</style>
+
+<body class="bg-[#101922]">
+    <section id="welcomePage" class=" flex justify-center items-center flex-col gap-y-10 py-24">
+        <div class="w-24 h-28 rounded-md bg-[#102336]"></div>
+        <div class="text-[3rem] text-white font-bold text-center">Scribe Markdown</div>
+        <div class="text-blue-200 font-awesome text-[1.2rem] text-center">Your minimalist desktop markdown editor for
+            clean, <br> focused writing.</div>
+        <div>
+            <!-- From Uiverse.io by Javierrocadev -->
+            <div class="flex flex-row gap-2">
+                <div class="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]"></div>
+                <div class="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]"></div>
+                <div class="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]"></div>
+            </div>
+        </div>
+    </section>
+    <section id="editorHomePage" class="flex">
+        <div id="sideBar" class=" border-[1px] border-l border-[#102336] p-3 w-[20%] hidden sticky left-0 top-0 sm:flex sm:flex-col sm:justify-between sm:h-[100vh]">
+            <div class="flex gap-x-4">
+                <span class="bg-[#102336] w-20 h-24 rounded-md"></span>
+                <span class="flex justify-center items-center flex-col">
+                    <p class="text-[1.5rem] text-white font-bold">Markdown</p>
+                    <p class="text-blue-200 font-awesome text-[.9rem]">Local Editor</p>
+                </span>
+            </div>
+            
+                <button id="newFileButton" type="button" class=" p-2 text-white bg-blue-700 text-[1.1rem] rounded-md"> + New document</button>
+        </div>
+        <main class="w-[100%] h-[200vh] sm:w-[80%]">
+            <div id="navBar" class="w-full border-b border-[#102336] h-16  flex  items-center p-5 sticky top-0">
+                <input type="text" name="" id="searchInput" placeholder=" Search your files..." class=" w-60 p-2 bg-transparent border-[#102336] border-[1px] text-white outline-none">
+            </div>
+
+        </main>
+    </section>
+    <section id="markdownInterface" class="none"></section>
+</body>
+<script src="main.js"></script>
+</html>
