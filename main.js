@@ -29,6 +29,7 @@ function createNewFilefunc() {
   homePage.classList.add("hidden");
   markdownPage.classList.remove("hidden");
   editor.value = "";
+//   updatePreview()
 }
 
 newFileButtons.forEach((btn) => {
@@ -101,7 +102,7 @@ function updatePreview () {
         console.log("Markdown text:", markDownText);
 }
 
-editor.addEventListener("click", () => {
+editor.addEventListener("input", () => {
     updatePreview()
 })
 
