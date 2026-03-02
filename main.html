@@ -6,17 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scribe markdown</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
-<style>
-    .hidden {
-        display: none;
-    }
-</style>
 
 <body class="bg-[#101922]">
-    <section id="welcomePage" class=" flex hidden justify-center items-center flex-col gap-y-10 py-24">
+    <section id="welcomePage" class="hidden flex justify-center items-center flex-col gap-y-10 py-24">
         <div class="w-24 h-28 rounded-md bg-[#102336]"></div>
         <div class="text-[3rem] text-white font-bold text-center">Scribe Markdown</div>
         <div class="text-blue-200 font-awesome text-[1.2rem] text-center">Your minimalist desktop markdown editor for
@@ -30,7 +27,7 @@
             </div>
         </div>
     </section>
-    <section id="editorHomePage" class="flex">
+    <section id="editorHomePage" class="hidden flex">
         <div id="sideBar"
             class=" border-[1px] border-l border-[#102336] p-3 w-[20%] hidden sticky left-0 top-0 sm:flex sm:flex-col sm:justify-between sm:h-[100vh]">
             <div class="flex gap-x-4">
@@ -84,14 +81,40 @@
                     <span id="fileName" class="text-[1.5rem] text-white font-bold">File_name</span>
                 </div>
             </div>
-            <div id="newfile" class=" text-[1.1rem] font-extrabold text-white flex flex-col justify-center items-center border-dashed border-[1px] border-[#102336] bg-transparent w-64 h-48 rounded-xl px-8 hover:bg-blue-700 hover:delay-150 acive:bg-blue-300 ">
+            <div id="newFile"
+                class=" text-[1.1rem] font-extrabold text-white flex flex-col justify-center items-center border-dashed border-[1px] border-[#102336] bg-transparent w-64 h-48 rounded-xl px-8 hover:bg-blue-700 hover:delay-150 acive:bg-blue-300 ">
                 <p>+</p>
                 <p>Create New</p>
             </div>
         </main>
     </section>
-    <section id="markdownInterface" class="none"></section>
+    <section id="markdownInterface" class=" w-[100%] h-[100%]">
+        <div id="markdownNavBar" class="bg-white p-4 flex justify-between sticky top-0">
+            <span class="flex gap-x-8 justify-center items-center">
+                <p class="text-[1.2rem] font-bold"><i class="fa-solid fa-pen-to-square"></i> Markdown studio</p>
+                <input type="text" name="" id="" placeholder="Enter file name"
+                    class="InputFileName bg-[#101922] p-3 text-white rounded-lg">
+            </span>
+            <span class="flex gap-x-3">
+                <button type="button" class="px-3 py-2 bg-blue-700 text-white rounded-xl gap-x-2 flex justify-center items-center"> <i class="fa-solid fa-floppy-disk"></i>Save</button>
+                <button type="button" class="p-3 text-[1.5rem]"><i class="fa-solid fa-download"></i></button>
+            </span>
+        </div>
+        <div class="w-full flex">
+            <span class="w-[50%] bg-transparent h-10 flex justify-between items-center px-4 text-blue-200">
+                <p class="">EDITOR</p>
+                <p class="">UTF-8  Markdown</p>
+            </span>
+            <span class="w-[50%] bg-gray-300 h-10 px-4 flex justify-between items-center">
+                <p class="text-gray-400">LIVE PREVIEW</p>
+                <button type="button" class=""><i class="fa-solid fa-up-right-from-square"></i></button>
+            </span>
+        </div>
+    </section>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <!-- <script src="main.js"></script> -->
 
 </html>
+
+</script>
