@@ -13,7 +13,7 @@
 </head>
 
 <body class="bg-[#101922]">
-    <section id="welcomePage" class="hidden flex justify-center items-center flex-col gap-y-10 py-24">
+    <section id="welcomePage" class="flex justify-center items-center flex-col gap-y-10 py-24">
         <div class="w-24 h-28 rounded-md bg-[#102336]"></div>
         <div class="text-[3rem] text-white font-bold text-center">Scribe Markdown</div>
         <div class="text-blue-200 font-awesome text-[1.2rem] text-center">Your minimalist desktop markdown editor for
@@ -27,7 +27,7 @@
             </div>
         </div>
     </section>
-    <section id="editorHomePage" class="hidden flex">
+    <section id="editorHomePage" class="flex">
         <div id="sideBar"
             class=" border-[1px] border-l border-[#102336] p-3 w-[20%] hidden sticky left-0 top-0 sm:flex sm:flex-col sm:justify-between sm:h-[100vh]">
             <div class="flex gap-x-4">
@@ -92,15 +92,15 @@
         <div id="markdownNavBar" class="bg-white p-4 flex justify-between sticky top-0">
             <span class="flex gap-x-8 justify-center items-center">
                 <p class="text-[1.2rem] font-bold"><i class="fa-solid fa-pen-to-square"></i> Markdown studio</p>
-                <input type="text" name="" id="" placeholder="Enter file name"
+                <input type="text" name="" id="newFileNameInput" placeholder="Enter file name"
                     class="InputFileName bg-[#101922] p-3 text-white rounded-lg">
             </span>
             <span class="flex gap-x-3">
-                <button type="button" class="px-3 py-2 bg-blue-700 text-white rounded-xl gap-x-2 flex justify-center items-center"> <i class="fa-solid fa-floppy-disk"></i>Save</button>
-                <button type="button" class="p-3 text-[1.5rem]"><i class="fa-solid fa-download"></i></button>
+                <button type="button" id="saveButton" class="px-3 py-2 bg-blue-700 text-white rounded-xl gap-x-2 flex justify-center items-center"> <i class="fa-solid fa-floppy-disk"></i>Save</button>
+                <button type="button" id="downloadButton" class="p-3 text-[1.5rem]"><i class="fa-solid fa-download"></i></button>
             </span>
         </div>
-        <div class="w-full flex">
+        <div class="w-full flex sticky top-[5.7rem] backdrop-blur-2xl">
             <span class="w-[50%] bg-transparent h-10 flex justify-between items-center px-4 text-blue-200">
                 <p class="">EDITOR</p>
                 <p class="">UTF-8  Markdown</p>
@@ -110,11 +110,16 @@
                 <button type="button" class=""><i class="fa-solid fa-up-right-from-square"></i></button>
             </span>
         </div>
+        <div class="w-full flex ">
+            <textarea name="" id="editor" class="w-[50%] bg-transparent min-h-[100vh] border-x-[1px] border-gray-300 text-white outline-none p-3"></textarea>
+            <iframe id="livePreview" class="w-[50%] bg-white min-h-[100vh] text-black"></iframe>
+        </div>
     </section>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<!-- <script src="main.js"></script> -->
+<script src="main.js"></script>
 
 </html>
+
 
 </script>
