@@ -190,7 +190,6 @@ editor.addEventListener("input", () => updatePreview());
 
 saveButton.addEventListener("click", ()=> {
     saveToLocalStorage()
-
 });
 
 
