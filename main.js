@@ -13,6 +13,7 @@ const saveButton = document.getElementById("saveButton");
 const downloadButton = document.getElementById("downloadButton");
 const editor = document.getElementById("editor");
 const preview = document.getElementById("livePreview");
+const toolbarButtons = document.querySelectorAll(".toolbar-btn");
 
 homePage.classList.add("hidden");
 markdownPage.classList.add("hidden");
@@ -23,28 +24,23 @@ setTimeout(function () {
   loadingPage.classList.add("hidden");
   homePage.classList.remove("hidden");
 }, 5000);
+// to create a new file
 
 function createNewFilefunc() {
   loadingPage.classList.add("hidden");
   homePage.classList.add("hidden");
   markdownPage.classList.remove("hidden");
+  //   make textarea blank for new file
   editor.value = "";
-//   updatePreview()
 }
 
-newFileButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    createNewFilefunc();
-  });
-});
+function updatePreview() {
+  const markDownText = editor.value;
+  const output = marked.parse(markDownText);
 
-function updatePreview () {
-    const markDownText = editor.value;
-    const output = marked.parse(markDownText);
+  console.log("HTML output:", output);
 
-    console.log("HTML output:", output);
-
-    const previewContent = `
+  const previewContent = `
         <!DOCTYPE html>
         <html>
         <head>
@@ -98,27 +94,122 @@ function updatePreview () {
             ${output}
         </body>
         </html>`;
-        preview.srcdoc = previewContent
-        console.log("Markdown text:", markDownText);
+  preview.srcdoc = previewContent;
+  console.log("Markdown text:", markDownText);
 }
 
-editor.addEventListener("input", () => {
-    updatePreview()
-})
-
-
-
-
+// added files to local storage
 const files = [];
 localStorage.setItem("files", files);
 
+function saveToLocalStorage() {
+  //   create new file details for the new file created
+  const File = new Object();
+  File.id = Date.now();
+  File.name = newFileNameInput.innerText;
+  File.Content = editor.value;
+  File.dateCreated = new Date().toDateString();
+    // push File to the array files in localStorage
+  files.push(File);
+}
 
-const file1 = {
-  id: 7323329,
-  name: "delete",
-  dateCreated: 17 - 3 - 2026,
-};
-files.push(file1);
+function insertFormatting(action) {
+  const start = editor.selectionStart;
+  const end = editor.selectionEnd;
+  const selectedText = editor.value.substring(start, end);
+  const beforeText = editor.value.substring(0, start);
+  const afterText = editor.value.substring(end);
 
+  let formattedText = "";
+  let cursorOffset = 0;
+
+  switch (action) {
+    case "bold":
+      formattedText = `**${selectedText}**`;
+      cursorOffset = selectedText ? formattedText.length : 2;
+      break;
+
+    case "italic":
+      formattedText = `*${selectedText}*`;
+      cursorOffset = selectedText ? formattedText.length : 1;
+      break;
+
+    case "h1":
+      formattedText = `# ${selectedText}`;
+      cursorOffset = selectedText ? formattedText.length : 2;
+      break;
+
+    case "h2":
+      formattedText = `## ${selectedText}`;
+      cursorOffset = selectedText ? formattedText.length : 3;
+      break;
+
+    case "ul":
+      formattedText = `* ${selectedText}`;
+      cursorOffset = selectedText ? formattedText.length : 2;
+      break;
+
+    case "ol":
+      formattedText = `1. ${selectedText}`;
+      cursorOffset = selectedText ? formattedText.length : 3;
+      break;
+
+    case "code":
+      formattedText = `\`\`\`\n${selectedText}\n\`\`\``;
+      cursorOffset = selectedText ? formattedText.length : 4;
+      break;
+
+    case "link":
+      formattedText = `[${selectedText || "link text"}](url)`;
+      cursorOffset = selectedText ? formattedText.length - 5 : 1;
+      break;
+
+    case "img":
+      formattedText = `![${selectedText || "alt text"}](image-url)`;
+      cursorOffset = selectedText ? formattedText.length - 12 : 2;
+      break;
+  }
+
+  // Insert the formatted text
+  editor.value = beforeText + formattedText + afterText;
+
+  // Set cursor position
+  const newCursorPos = start + cursorOffset;
+  editor.focus();
+  editor.setSelectionRange(newCursorPos, newCursorPos);
+
+  // Update preview
+  updatePreview();
+}
+
+newFileButtons.forEach((btn) =>
+  btn.addEventListener("click", () => createNewFilefunc())
+);
+
+editor.addEventListener("input", () => updatePreview());
+
+saveButton.addEventListener("click", ()=> {
+    saveToLocalStorage()
+
+});
+
+
+toolbarButtons.forEach((button) =>
+  button.addEventListener("click", () => {
+    const action = this.getAttribute("data-action");
+    insertFormatting(action);
+  })
+);
+
+// const files = [];
+// localStorage.setItem("files", files);
+
+// const file1 = {
+//   id: Date.now(),
+//   name: newFileNameInput.value,
+//   content: previewContent,
+//   dateCreated: new Date().toDateString(),
+// };
+// files.push(file1);
 
 localStorage.getItem("files");

@@ -88,8 +88,8 @@
             </div>
         </main>
     </section>
-    <section id="markdownInterface" class=" w-[100%] h-[100%]">
-        <div id="markdownNavBar" class="bg-white p-4 flex justify-between sticky top-0">
+    <section id="markdownInterface" class=" w-[100%] h-[100%] flex flex-col justify-center items-center">
+        <div id="markdownNavBar" class="bg-white p-4 flex justify-between sticky top-0 w-full">
             <span class="flex gap-x-8 justify-center items-center">
                 <p class="text-[1.2rem] font-bold"><i class="fa-solid fa-pen-to-square"></i> Markdown studio</p>
                 <input type="text" name="" id="newFileNameInput" placeholder="Enter file name"
@@ -113,6 +113,35 @@
         <div class="w-full flex min-h-screen">
             <textarea name="" id="editor" class="w-[50%] bg-transparent border-x-[1px] border-gray-300 text-white outline-none p-3"></textarea>
             <iframe id="livePreview" class="w-[50%] bg-white text-black"></iframe>
+        </div>
+        <div id="toolBar" class="gap-5 flex bg-[#101922] text-white p-3 justify-center items-center w-96 rounded-xl fixed bottom-[20px]">
+            <button class="toolbar-btn" data-action="bold" title="Bold">
+                <i class="fa-solid fa-bold"></i>
+              </button>
+              <button class="toolbar-btn" data-action="italic" title="Italic">
+                <i class="fa-solid fa-italic"></i>
+              </button>
+              <button class="toolbar-btn" data-action="h1" title="Heading 1">
+                H1
+              </button>
+              <button class="toolbar-btn" data-action="h2" title="Heading 2">
+                H2
+              </button>
+              <button class="toolbar-btn" data-action="ul" title="Bullet List">
+                <i class="fa-solid fa-list"></i>
+              </button>
+              <button class="toolbar-btn" data-action="ol" title="Numbered List">
+                <i class="fa-solid fa-list-ol"></i>
+              </button>
+              <button class="toolbar-btn" data-action="code" title="Code Block">
+                <i class="fa-solid fa-code"></i>
+              </button>
+              <button class="toolbar-btn" data-action="link" title="Link">
+                <i class="fa-solid fa-link"></i>
+              </button>
+              <button class="toolbar-btn" data-action="img" title="Image">
+                <i class="fa-solid fa-image"></i>
+              </button>
         </div>
     </section>
 </body>
