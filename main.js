@@ -14,7 +14,11 @@ const downloadButton = document.getElementById("downloadButton");
 const editor = document.getElementById("editor");
 const preview = document.getElementById("livePreview");
 const toolbarButtons = document.querySelectorAll(".toolbar-btn");
-const fileContainer = document.getElementById("files")
+const fileContainer = document.getElementById("files");
+const fileCard = document.querySelectorAll("#fileCard");
+const getUserName = document.getElementById("getUserName");
+const userName = document.getElementById("userName");
+const greetUser = document.getElementById("greetUser")
 
 homePage.classList.add("hidden");
 markdownPage.classList.add("hidden");
@@ -25,8 +29,8 @@ setTimeout(function () {
   loadingPage.classList.add("hidden");
   homePage.classList.remove("hidden");
 }, 5000);
-// to create a new file
 
+// to create a new file
 function createNewFilefunc() {
   loadingPage.classList.add("hidden");
   homePage.classList.add("hidden");
@@ -35,6 +39,7 @@ function createNewFilefunc() {
   editor.value = "";
 }
 
+// to convert the inputted text to markdown format
 function updatePreview() {
   const markDownText = editor.value;
   const output = marked.parse(markDownText);
@@ -109,16 +114,58 @@ function saveToLocalStorage() {
     name: newFileNameInput.value, // Use .value instead of .innerText
     content: editor.value,
     dateCreated: new Date().toDateString(),
+
+    
   };
 
   // Add the new file to the files array
   files.push(File);
-console.log("pushing");
+  console.log("pushing");
   // Update localStorage with the updated files array
   localStorage.setItem("files", JSON.stringify(files));
-  console.log("saved to localstorage")
+  console.log("saved to localstorage");
+  markdownPage.classList.add("hidden");
+  homePage.classList.remove("hidden");
+
+  // to display each file in local storage
+
+  files.forEach((file) => {
+    const newFile = `
+    <div id="fileCard" class="flex flex-col gap-2">
+            <span class="bg-[#0f1a30] w-64 h-48 rounded-xl hover:bg-[#0f192e]"></span>
+            <span id="savedFileName" class="text-[1.5rem] text-white font-bold">${file.name}</span>
+            <span class="text-[.9rem] text-white font-bold">${file.dateCreated}</span>
+        </div>
+    `;
+    fileContainer.innerHTML += newFile;
+  });
 }
 
+// displaya each file saved to local storage
+function displayingFile() {
+  
+}
+
+// opening old file for update or anything 
+
+  function reaccessingFiles(event) {
+  const fileCard = event.target.closest("#fileCard");
+  if (!fileCard) return; // Ensure the clicked element is a file card
+
+  const fileNameElement = fileCard.querySelector("#savedFileName");
+  const fileName = fileNameElement.textContent;
+
+  const file = files.find((f) => f.name === fileName);
+  if (file) {
+    editor.value = file.content;
+    newFileNameInput.value = file.name;
+    markdownPage.classList.remove("hidden");
+    homePage.classList.add("hidden");
+  }
+}
+
+
+// toolbar functionality
 function insertFormatting(action) {
   const start = editor.selectionStart;
   const end = editor.selectionEnd;
@@ -196,24 +243,23 @@ editor.addEventListener("input", () => updatePreview());
 
 saveButton.addEventListener("click", () => {
   saveToLocalStorage();
+  console.log("pushed new file to localstorage");
+  displayingFile();
 });
 
 toolbarButtons.forEach((button) => {
   button.addEventListener("click", function () {
     const action = this.getAttribute("data-action");
     insertFormatting(action);
-  })}
-);
+  });
+});
 
-// const files = [];
-// localStorage.setItem("files", files);
+fileContainer.addEventListener("click", (event) => {
+  const fileCard = event.target.closest("#fileCard");
+  if (fileCard) {
+    reaccessingFiles(event); // Pass the event object
+  }
+});
 
-// const file1 = {
-//   id: Date.now(),
-//   name: newFileNameInput.value,
-//   content: previewContent,
-//   dateCreated: new Date().toDateString(),
-// };
-// files.push(file1);
 
 localStorage.getItem("files");

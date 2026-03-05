@@ -12,8 +12,18 @@
 
 </head>
 
-<body class="bg-[#101922]">
-    <section id="welcomePage" class="flex justify-center items-center flex-col gap-y-10 py-24">
+<body class="bg-[#101922] flex flex-col justify-center items-center">
+    <div id="getUserName" class="hidden flex flex-col gap-y-4 bg-blue-600 shadow-lg p-10 justify-center items-center text-white rounded-xl h-[30em] w-[40em] relative top-[100px] ">
+        <button type="button" class="fixed right-[600px] top-6 bg-blue-900 p-2 rounded-full size-10">&#x2715;</button>
+        <span id="greetUser" class="text-[2rem] font-extrabold"></span>
+        <span class="">Tell us your name so we can say hello properly</span>
+        <span class="flex flex-col gap-y-2">
+            Full name
+             <input type="text" name="Username" id="" class="p-2 rounded-md outline-none text-black">
+        </span>
+        <button type="button" id="getStarted" class="w-40 h-10 bg-blue-700 text-white rounded-lg">Get Started</button>
+    </div>
+    <section id="welcomePage" class=" flex justify-center items-center flex-col gap-y-10 py-24">
         <div class="w-24 h-28 rounded-md bg-[#102336]"></div>
         <div class="text-[3rem] text-white font-bold text-center">Scribe Markdown</div>
         <div class="text-blue-200 font-awesome text-[1.2rem] text-center">Your minimalist desktop markdown editor for
@@ -27,7 +37,7 @@
             </div>
         </div>
     </section>
-    <section id="editorHomePage" class="flex">
+    <section id="editorHomePage" class="flex w-full">
         <div id="sideBar"
             class=" border-[1px] border-l border-[#102336] p-3 w-[20%] hidden sticky left-0 top-0 sm:flex sm:flex-col sm:justify-between sm:h-[100vh]">
             <div class="flex gap-x-4">
@@ -63,32 +73,7 @@
                 <span class="text-[1.2rem] text-white font-bold">Recent documents</span>
                 <span><button class="bg-transparent text-blue-500" type="button" id="viewAll">View All</button></span>
             </div>
-            <div id="files" class="flex flex-wrap justify-start gap-4">
-                <div class="flex flex-col ">
-                    <span class="bg-[#0f1a30] w-64 h-48 rounded-xl hover:bg-[#0f192e]"></span>
-                    <span id="fileName" class="text-[1.5rem] text-white font-bold">File_name</span>
-                </div>
-                <div class="flex flex-col gap-y-2">
-                    <span class="bg-[#0f1a30] w-64 h-48 rounded-xl hover:bg-[#0f192e]"></span>
-                    <span id="fileName" class="text-[1.5rem] text-white font-bold">File_name</span>
-                </div>
-                <div class="flex flex-col gap-y-2">
-                    <span class="bg-[#0f1a30] w-64 h-48 rounded-xl hover:bg-[#0f192e]"></span>
-                    <span id="fileName" class="text-[1.5rem] text-white font-bold">File_name</span>
-                </div>
-                <div class="flex flex-col gap-y-2">
-                    <span class="bg-[#0f1a30] w-64 h-48 rounded-xl hover:bg-[#0f192e]"></span>
-                    <span id="fileName" class="text-[1.5rem] text-white font-bold">File_name</span>
-                </div>
-                <div class="flex flex-col gap-y-2">
-                    <span class="bg-[#0f1a30] w-64 h-48 rounded-xl hover:bg-[#0f192e]"></span>
-                    <span id="fileName" class="text-[1.5rem] text-white font-bold">File_name</span>
-                </div>
-                <div class="flex flex-col gap-y-2">
-                    <span class="bg-[#0f1a30] w-64 h-48 rounded-xl hover:bg-[#0f192e]"></span>
-                    <span id="fileName" class="text-[1.5rem] text-white font-bold">File_name</span>
-                </div>
-            </div>
+            <div id="files" class="flex flex-wrap justify-start gap-4"></div>
             <div id="newFile"
                 class=" text-[1.1rem] font-extrabold text-white flex flex-col justify-center items-center border-dashed border-[1px] border-[#102336] bg-transparent w-64 h-48 rounded-xl px-8 hover:bg-blue-700 hover:delay-150 acive:bg-blue-300 ">
                 <p>+</p>
@@ -96,7 +81,7 @@
             </div>
         </main>
     </section>
-    <section id="markdownInterface" class=" w-[100%] h-[100%] flex flex-col justify-center items-center">
+    <section id="markdownInterface" class="w-[100%] h-[100%] flex flex-col justify-center items-center">
         <div id="markdownNavBar" class="bg-white p-4 flex justify-between sticky top-0 w-full">
             <span class="flex gap-x-8 justify-center items-center">
                 <p class="text-[1.2rem] font-bold"><i class="fa-solid fa-pen-to-square"></i> Markdown studio</p>
@@ -157,6 +142,3 @@
 <script src="main.js"></script>
 
 </html>
-
-
-</script>
