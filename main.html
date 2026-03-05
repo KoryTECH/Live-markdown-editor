@@ -13,13 +13,13 @@
 </head>
 
 <body class="bg-[#101922] flex flex-col justify-center items-center">
-    <div id="getUserName" class="hidden flex flex-col gap-y-4 bg-blue-600 shadow-lg p-10 justify-center items-center text-white rounded-xl h-[30em] w-[40em] relative top-[100px] ">
+    <div id="modal" class="hidden flex flex-col gap-y-4 bg-blue-600 shadow-lg p-10 justify-center items-center text-white rounded-xl h-[30em] w-[40em] relative top-[100px] ">
         <button type="button" class="fixed right-[600px] top-6 bg-blue-900 p-2 rounded-full size-10">&#x2715;</button>
-        <span id="greetUser" class="text-[2rem] font-extrabold"></span>
+        <span class="text-[2rem] font-extrabold">Welcome!</span>
         <span class="">Tell us your name so we can say hello properly</span>
         <span class="flex flex-col gap-y-2">
             Full name
-             <input type="text" name="Username" id="" class="p-2 rounded-md outline-none text-black">
+             <input type="text" name="Username" id="userName" class="p-2 rounded-md outline-none text-black">
         </span>
         <button type="button" id="getStarted" class="w-40 h-10 bg-blue-700 text-white rounded-lg">Get Started</button>
     </div>
@@ -59,7 +59,7 @@
             </div>
             <div class="flex flex-col gap-3 justify-between sm:flex-row">
                 <span>
-                    <p class="text-[2.5rem] text-white font-bold">Welcome Back!</p>
+                    <p class="text-[2.5rem] text-white font-bold" id="greetUser">Welcome Back!</p>
                     <p class="text-blue-200 font-awesome text-[1.1rem]">Pick up where you left off or start something
                         new.</p>
                 </span>

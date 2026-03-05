@@ -8,7 +8,7 @@ const markdownPage = document.getElementById("markdownInterface");
 const inputFileName = document.getElementById("inputFileName");
 const fileName = document.getElementById("fileName");
 const newFileButtons = document.querySelectorAll("#newFileButton, #newFile");
-const newFileNameInput = document.getElementById("newFileNameInput");
+const newFileName = document.getElementById("newFileName");
 const saveButton = document.getElementById("saveButton");
 const downloadButton = document.getElementById("downloadButton");
 const editor = document.getElementById("editor");
@@ -16,9 +16,10 @@ const preview = document.getElementById("livePreview");
 const toolbarButtons = document.querySelectorAll(".toolbar-btn");
 const fileContainer = document.getElementById("files");
 const fileCard = document.querySelectorAll("#fileCard");
-const getUserName = document.getElementById("getUserName");
-const userName = document.getElementById("userName");
-const greetUser = document.getElementById("greetUser")
+const modal = document.getElementById("modal");
+// const userName = document.getElementById("userName").value;
+const greetUser = document.getElementById("greetUser");
+const getStarted = document.getElementById("getStarted");
 
 homePage.classList.add("hidden");
 markdownPage.classList.add("hidden");
@@ -27,7 +28,7 @@ markdownPage.classList.add("hidden");
 
 setTimeout(function () {
   loadingPage.classList.add("hidden");
-  homePage.classList.remove("hidden");
+  checkForUserName();
 }, 5000);
 
 // to create a new file
@@ -111,7 +112,7 @@ const files = JSON.parse(localStorage.getItem("files") || "[]");
 function saveToLocalStorage() {
   const File = {
     id: Date.now(),
-    name: newFileNameInput.value, // Use .value instead of .innerText
+    name: newFileName.value, // Use .value instead of .innerText
     content: editor.value,
     dateCreated: new Date().toDateString(),
 
@@ -147,8 +148,7 @@ function displayingFile() {
 }
 
 // opening old file for update or anything 
-
-  function reaccessingFiles(event) {
+function reaccessingFiles(event) {
   const fileCard = event.target.closest("#fileCard");
   if (!fileCard) return; // Ensure the clicked element is a file card
 
@@ -158,12 +158,15 @@ function displayingFile() {
   const file = files.find((f) => f.name === fileName);
   if (file) {
     editor.value = file.content;
-    newFileNameInput.value = file.name;
+    newFileName.value = file.name;
     markdownPage.classList.remove("hidden");
     homePage.classList.add("hidden");
   }
 }
 
+// function getUserName(){
+
+// }
 
 // toolbar functionality
 function insertFormatting(action) {
@@ -234,6 +237,31 @@ function insertFormatting(action) {
   // Update preview
   updatePreview();
 }
+
+function checkForUserName(){
+  const storedUserName = localStorage.getItem("username");
+  greetUser.innerText = `Welcome Back ${storedUserName}!`;
+  if(localStorage.getItem("username")){
+    homePage.classList.remove("hidden")
+    modal.classList.add("hidden")
+  }
+  else {
+    homePage.classList.add("hidden");
+    markdownPage.classList.add("hidden")
+    loadingPage.classList.add("hidden")
+    modal.classList.remove("hidden");
+  }
+}
+
+getStarted.addEventListener("click", function (){
+  const userName = document.getElementById("userName").value;
+  localStorage.setItem("username", userName)
+  modal.classList.add("hidden")
+  homePage.classList.remove("hidden")
+  greetUser.innerText = `Welcome Back ${userName}!`;
+  homePage.classList.remove("hidden")
+
+})
 
 newFileButtons.forEach((btn) =>
   btn.addEventListener("click", () => createNewFilefunc())
