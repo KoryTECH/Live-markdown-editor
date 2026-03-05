@@ -1,4 +1,5 @@
 "use strict";
+// to do 
 // debugger
 
 // get elements for easy access
@@ -20,6 +21,9 @@ const modal = document.getElementById("modal");
 // const userName = document.getElementById("userName").value;
 const greetUser = document.getElementById("greetUser");
 const getStarted = document.getElementById("getStarted");
+const backButton = document.getElementById("backButton");
+var deleteButton;
+var editButton;
 
 homePage.classList.add("hidden");
 markdownPage.classList.add("hidden");
@@ -29,7 +33,8 @@ markdownPage.classList.add("hidden");
 setTimeout(function () {
   loadingPage.classList.add("hidden");
   checkForUserName();
-}, 5000);
+  displayingFile();
+}, 1);
 
 // to create a new file
 function createNewFilefunc() {
@@ -127,24 +132,31 @@ function saveToLocalStorage() {
   console.log("saved to localstorage");
   markdownPage.classList.add("hidden");
   homePage.classList.remove("hidden");
+  displayingFile()
+}
 
+// displaya each file saved to local storage
+function displayingFile() {
   // to display each file in local storage
 
   files.forEach((file) => {
     const newFile = `
     <div id="fileCard" class="flex flex-col gap-2">
-            <span class="bg-[#0f1a30] w-64 h-48 rounded-xl hover:bg-[#0f192e]"></span>
-            <span id="savedFileName" class="text-[1.5rem] text-white font-bold">${file.name}</span>
-            <span class="text-[.9rem] text-white font-bold">${file.dateCreated}</span>
-        </div>
+    <span id="blankspace" class="bg-[#0f1a30] w-64 h-48 rounded-xl hover:bg-[#0f192e] flex justify-center items-center text-[2rem] transition-colors duration-300 relative group cursor-pointer">
+      <i class="fa-solid fa-book text-gray-400 group-hover:hidden transition-all duration-300"></i>
+      <div class="hidden group-hover:flex gap-4 transition-all duration-300">
+        <span id="deleteButton" class="text-white bg-blue-700 p-3 rounded-2xl"><i class="fa-solid fa-trash"></i></span>
+        <span id="editButton" class="text-white bg-blue-700 p-3 rounded-2xl"><i class="fa-solid fa-pencil"></i></span>
+      </div>
+    </span>
+    <span id="savedFileName" class="text-[1.5rem] text-white font-bold">${file.name}</span>
+    <span class="text-[.9rem] text-white font-bold">${file.dateCreated}</span>
+</div>
     `;
+    deleteButton = document.querySelectorAll("deleteButton")
+    editButton = document.querySelectorAll("editButton")
     fileContainer.innerHTML += newFile;
   });
-}
-
-// displaya each file saved to local storage
-function displayingFile() {
-  
 }
 
 // opening old file for update or anything 
@@ -162,6 +174,7 @@ function reaccessingFiles(event) {
     markdownPage.classList.remove("hidden");
     homePage.classList.add("hidden");
   }
+  updatePreview()
 }
 
 // function getUserName(){
@@ -266,6 +279,12 @@ getStarted.addEventListener("click", function (){
 newFileButtons.forEach((btn) =>
   btn.addEventListener("click", () => createNewFilefunc())
 );
+
+backButton.addEventListener("click",function(){
+  welcomePage.classList.add("hidden");
+  homePage.classList.remove("hidden");
+  markdownPage.classList.add("hidden")
+})
 
 editor.addEventListener("input", () => updatePreview());
 

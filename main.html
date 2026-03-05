@@ -11,7 +11,13 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
-
+<style>
+    #fileCard:hover{
+        & #deleteIcon{
+            opacity: 1;
+        }
+    }
+</style>
 <body class="bg-[#101922] flex flex-col justify-center items-center">
     <div id="modal" class="hidden flex flex-col gap-y-4 bg-blue-600 shadow-lg p-10 justify-center items-center text-white rounded-xl h-[30em] w-[40em] relative top-[100px] ">
         <button type="button" class="fixed right-[600px] top-6 bg-blue-900 p-2 rounded-full size-10">&#x2715;</button>
@@ -84,8 +90,9 @@
     <section id="markdownInterface" class="w-[100%] h-[100%] flex flex-col justify-center items-center">
         <div id="markdownNavBar" class="bg-white p-4 flex justify-between sticky top-0 w-full">
             <span class="flex gap-x-8 justify-center items-center">
+                <p id="backButton" class="text-[1.5rem] text-black active:bg-white hover:animate-ping"><i class="fa-solid fa-arrow-left mr-2"></i></p>
                 <p class="text-[1.2rem] font-bold"><i class="fa-solid fa-pen-to-square"></i> Markdown studio</p>
-                <input type="text" name="" id="newFileNameInput" placeholder="Enter file name"
+                <input type="text" name="" id="newFileName" placeholder="Enter file name"
                     class="InputFileName bg-[#101922] p-3 text-white rounded-lg">
             </span>
             <span class="flex gap-x-3">
