@@ -11,13 +11,6 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
-<style>
-    #fileCard:hover{
-        & #deleteIcon{
-            opacity: 1;
-        }
-    }
-</style>
 <body class="bg-[#101922] flex flex-col justify-center items-center">
     <div id="modal" class="hidden flex flex-col gap-y-4 bg-blue-600 shadow-lg p-10 justify-center items-center text-white rounded-xl h-[30em] w-[40em] relative top-[100px] ">
         <button type="button" class="fixed right-[600px] top-6 bg-blue-900 p-2 rounded-full size-10">&#x2715;</button>
@@ -30,7 +23,7 @@
         <button type="button" id="getStarted" class="w-40 h-10 bg-blue-700 text-white rounded-lg">Get Started</button>
     </div>
     <section id="welcomePage" class=" flex justify-center items-center flex-col gap-y-10 py-24">
-        <div class="w-24 h-28 rounded-md bg-[#102336]"></div>
+        <div class="w-24 h-28 rounded-md bg-[#102336] flex justify-center items-center text-white"><i class="fa-solid fa-m bg-blue-600 p-5 rounded-xl"></i></div>
         <div class="text-[3rem] text-white font-bold text-center">Scribe Markdown</div>
         <div class="text-blue-200 font-awesome text-[1.2rem] text-center">Your minimalist desktop markdown editor for
             clean, <br> focused writing.</div>
@@ -47,7 +40,7 @@
         <div id="sideBar"
             class=" border-[1px] border-l border-[#102336] p-3 w-[20%] hidden sticky left-0 top-0 sm:flex sm:flex-col sm:justify-between sm:h-[100vh]">
             <div class="flex gap-x-4">
-                <span class="bg-[#102336] w-20 h-24 rounded-md"></span>
+                <span class="bg-[#102336] w-20 h-24 rounded-md text-gray-400 flex justify-center items-center text-[2rem]"><i class="fa-solid fa-book h-70"></i></span>
                 <span class="flex justify-center items-center flex-col">
                     <p class="text-[1.5rem] text-white font-bold">Markdown</p>
                     <p class="text-blue-200 font-awesome text-[.9rem]">Local Editor</p>

@@ -34,7 +34,7 @@ setTimeout(function () {
   loadingPage.classList.add("hidden");
   checkForUserName();
   displayingFile();
-}, 1);
+}, 1500);
 
 // to create a new file
 function createNewFilefunc() {
