@@ -1,27 +1,73 @@
-'use strict'
+"use strict";
+// to do
+// fix the error in the displaying file
+// add the resave to same path function
+// Finish the ui refurbishing
+// 
+// 
 
-const editor = document.getElementById('editor');
-const preview = document.getElementById('preview-page');
 
-function updatePreview(){
-    // get text from text area
-    const markDownText = editor.value;
-    const output = marked.parse(markDownText);
 
-    console.log("HTML output:", output);
-    // check if iframe classList is light-theme
-    const isLightTheme = document.body.classList.contains("light-theme");
-    const previewContent = `
+// get elements for easy access
+const homePage = document.getElementById("editorHomePage");
+const markdownPage = document.getElementById("markdownInterface");
+const inputFileName = document.getElementById("inputFileName");
+const fileName = document.getElementById("fileName");
+const newFileButtons = document.querySelectorAll("#newFileButton, #newFile");
+const newFileName = document.getElementById("newFileName");
+const saveButton = document.getElementById("saveButton");
+const downloadButton = document.getElementById("downloadButton");
+const editor = document.getElementById("editor");
+const preview = document.getElementById("livePreview");
+const toolbarButtons = document.querySelectorAll(".toolbar-btn");
+const fileContainer = document.getElementById("files");
+const fileCard = document.querySelectorAll("#fileCard");
+const modal = document.getElementById("modal");
+// const userName = document.getElementById("userName").value;
+const greetUser = document.getElementById("greetUser");
+const getStarted = document.getElementById("getStarted");
+const backButton = document.getElementById("backButton");
+const clearAll = document.getElementById("clearAll")
+let deleteButton;
+let editButton;
+
+
+markdownPage.classList.add("hidden");
+
+// onload display loading welcome screen
+
+// setTimeout(function () {
+//   loadingPage.classList.add("hidden");
+//   checkForUserName();
+//   displayingFile();
+// }, 1500);
+
+// to create a new file
+function createNewFilefunc() {
+  homePage.classList.add("hidden");
+  markdownPage.classList.remove("hidden");
+  //   make textarea blank for new file
+  editor.value = "";
+}
+
+// to convert the inputted text to markdown format
+function updatePreview() {
+  const markDownText = editor.value;
+  const output = marked.parse(markDownText);
+
+  console.log("HTML output:", output);
+
+  const previewContent = `
         <!DOCTYPE html>
         <html>
         <head>
             <meta charset="UTF-8">
             <style>
                 body {
-                    color: white;
+                    background: white;
+                    color: black;
                     font-family: Arial, sans-serif;
                     padding: 20px;
-                    background: #0d120d;
                     margin: 0;
                     line-height: 1.6;
                 }
@@ -61,196 +107,218 @@ function updatePreview(){
                 }
             </style>
         </head>
-        <body class="${isLightTheme ? 'light-theme' : ''}">
+        <body>
             ${output}
         </body>
         </html>`;
-    preview.srcdoc = previewContent;
-    console.log("Markdown text:", markDownText);
-    // save to Local storage
-    localStorage.setItem('editorContent', markDownText);
+  preview.srcdoc = previewContent;
+  console.log("Markdown text:", markDownText);
 }
 
-editor.addEventListener("input", updatePreview)
+// Retrieve files from localStorage or initialize an empty array
+let files = JSON.parse(localStorage.getItem("files") || "[]");
 
-//  to upload the saved content from local storage
-console.log("checking for saved content.....")
-let savedContent = localStorage.getItem('editorContent');
-if(savedContent) {
-    editor.value = savedContent;
-    updatePreview();
+// Save files to localStorage
+function saveToLocalStorage() {
+  debugger;
+  const File = {
+    id: Date.now(),
+    name: newFileName.value, // Use .value instead of .innerText
+    content: editor.value,
+    dateCreated: new Date().toDateString(),
+
+    
+  };
+
+  // Add the new file to the files array
+  files.push(File);
+  console.log("pushing");
+  // Update localStorage with the updated files array
+  localStorage.setItem("files", JSON.stringify(files));
+  console.log("saved to localstorage");
+  markdownPage.classList.add("hidden");
+  homePage.classList.remove("hidden");
+  displayingFile()
 }
-updatePreview()
 
-// light theme toggle 
-const themeToggle = document.querySelector(".theme");
+// displaya each file saved to local storage
+function displayingFile() {
+  // to display each file in local storage
+  fileContainer.innerHTML = " "
 
-themeToggle.addEventListener("click", function(){
-    document.body.classList.toggle("light-theme");
-    updatePreview()
+  files.forEach((file) => {
+    const newFile = `
+    <div id="fileCard" class="flex flex-col gap-2">
+    <span id="blankspace" class="bg-[#0f1a30] w-64 h-48 rounded-xl hover:bg-[#0f192e] flex justify-center items-center text-[2rem] transition-colors duration-300 relative group cursor-pointer">
+      <i class="fa-solid fa-book text-gray-400 group-hover:hidden transition-all duration-300"></i>
+      <div class="hidden group-hover:flex gap-4 transition-all duration-300">
+        <span id="deleteButton" class="text-white bg-blue-700 p-3 rounded-2xl"><i class="fa-solid fa-trash"></i></span>
+        <span id="editButton" class="text-white bg-blue-700 p-3 rounded-2xl"><i class="fa-solid fa-pencil"></i></span>
+      </div>
+    </span>
+    <span id="savedFileName" class="text-[1.5rem] text-white font-bold">${file.name}</span>
+    <span class="text-[.9rem] text-white font-bold">${file.dateCreated}</span>
+</div>
+    `;
+    deleteButton = document.querySelectorAll("deleteButton")
+    editButton = document.querySelectorAll("editButton")
+    fileContainer.innerHTML += newFile;
+  });
+}
+
+// opening old file for update or anything 
+function reaccessingFiles(event) {
+  const fileCard = event.target.closest("#fileCard");
+  if (!fileCard) return; // Ensure the clicked element is a file card
+
+  const fileNameElement = fileCard.querySelector("#savedFileName");
+  const fileName = fileNameElement.textContent;
+
+  const file = files.find((f) => f.name === fileName);
+  if (file) {
+    editor.value = file.content;
+    newFileName.value = file.name;
+    markdownPage.classList.remove("hidden");
+    homePage.classList.add("hidden");
+  }
+  updatePreview()
+}
+
+// function getUserName(){
+
+// }
+
+// toolbar functionality
+function insertFormatting(action) {
+  const start = editor.selectionStart;
+  const end = editor.selectionEnd;
+  const selectedText = editor.value.substring(start, end);
+  const beforeText = editor.value.substring(0, start);
+  const afterText = editor.value.substring(end);
+
+  let formattedText = "";
+  let cursorOffset = 0;
+
+  switch (action) {
+    case "bold":
+      formattedText = `**${selectedText}**`;
+      cursorOffset = selectedText ? formattedText.length : 2;
+      break;
+
+    case "italic":
+      formattedText = `*${selectedText}*`;
+      cursorOffset = selectedText ? formattedText.length : 1;
+      break;
+
+    case "h1":
+      formattedText = `# ${selectedText}`;
+      cursorOffset = selectedText ? formattedText.length : 2;
+      break;
+
+    case "h2":
+      formattedText = `## ${selectedText}`;
+      cursorOffset = selectedText ? formattedText.length : 3;
+      break;
+
+    case "ul":
+      formattedText = `* ${selectedText}`;
+      cursorOffset = selectedText ? formattedText.length : 2;
+      break;
+
+    case "ol":
+      formattedText = `1. ${selectedText}`;
+      cursorOffset = selectedText ? formattedText.length : 3;
+      break;
+
+    case "code":
+      formattedText = `\`\`\`\n${selectedText}\n\`\`\``;
+      cursorOffset = selectedText ? formattedText.length : 4;
+      break;
+
+    case "link":
+      formattedText = `[${selectedText || "link text"}](url)`;
+      cursorOffset = selectedText ? formattedText.length - 5 : 1;
+      break;
+
+    case "img":
+      formattedText = `![${selectedText || "alt text"}](image-url)`;
+      cursorOffset = selectedText ? formattedText.length - 12 : 2;
+      break;
+  }
+
+  // Insert the formatted text
+  editor.value = beforeText + formattedText + afterText;
+
+  // Set cursor position
+  const newCursorPos = start + cursorOffset;
+  editor.focus();
+  editor.setSelectionRange(newCursorPos, newCursorPos);
+
+  // Update preview
+  updatePreview();
+}
+
+function checkForUserName(){
+  const storedUserName = localStorage.getItem("username");
+  greetUser.innerText = `Welcome Back ${storedUserName}!`;
+  if(localStorage.getItem("username")){
+    homePage.classList.remove("hidden")
+    modal.classList.add("hidden")
+  }
+  else {
+    homePage.classList.remove("hidden");
+    markdownPage.classList.add("hidden")
+    modal.classList.remove("hidden");
+  }
+}
+
+getStarted.addEventListener("click", function (){
+  const userName = document.getElementById("userName").value;
+  localStorage.setItem("username", userName)
+  modal.classList.add("hidden")
+  homePage.classList.remove("hidden")
+  greetUser.innerText = `Welcome Back ${userName}!`;
+  homePage.classList.remove("hidden")
+
 })
 
-// TOOLBAR BUTTON FUNCTIONS
-const toolbarButtons = document.querySelectorAll('.toolbar-btn');
+checkForUserName();
+displayingFile();
 
-toolbarButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        const action = this.getAttribute('data-action');
-        insertFormatting(action);
-    });
+newFileButtons.forEach((btn) =>
+  btn.addEventListener("click", () => createNewFilefunc())
+);
+
+clearAll.addEventListener("click", function(){
+  files = [];
+  displayingFile();
+})
+
+backButton.addEventListener("click",function(){
+  homePage.classList.remove("hidden");
+  markdownPage.classList.add("hidden")
+})
+
+editor.addEventListener("input", () => updatePreview());
+
+saveButton.addEventListener("click", () => {
+  saveToLocalStorage();
+  console.log("pushed new file to localstorage");
 });
 
-function insertFormatting(action) {
-    const start = editor.selectionStart;
-    const end = editor.selectionEnd;
-    const selectedText = editor.value.substring(start, end);
-    const beforeText = editor.value.substring(0, start);
-    const afterText = editor.value.substring(end);
-    
-    let formattedText = '';
-    let cursorOffset = 0;
-    
-    switch(action) {
-        case 'bold':
-            formattedText = `**${selectedText}**`;
-            cursorOffset = selectedText ? formattedText.length : 2;
-            break;
-            
-        case 'italic':
-            formattedText = `*${selectedText}*`;
-            cursorOffset = selectedText ? formattedText.length : 1;
-            break;
-            
-        case 'h1':
-            formattedText = `# ${selectedText}`;
-            cursorOffset = selectedText ? formattedText.length : 2;
-            break;
-            
-        case 'h2':
-            formattedText = `## ${selectedText}`;
-            cursorOffset = selectedText ? formattedText.length : 3;
-            break;
-            
-        case 'ul':
-            formattedText = `* ${selectedText}`;
-            cursorOffset = selectedText ? formattedText.length : 2;
-            break;
-            
-        case 'ol':
-            formattedText = `1. ${selectedText}`;
-            cursorOffset = selectedText ? formattedText.length : 3;
-            break;
-            
-        case 'code':
-            formattedText = `\`\`\`\n${selectedText}\n\`\`\``;
-            cursorOffset = selectedText ? formattedText.length : 4;
-            break;
-            
-        case 'link':
-            formattedText = `[${selectedText || 'link text'}](url)`;
-            cursorOffset = selectedText ? formattedText.length - 5 : 1;
-            break;
-            
-        case 'img':
-            formattedText = `![${selectedText || 'alt text'}](image-url)`;
-            cursorOffset = selectedText ? formattedText.length - 12 : 2;
-            break;
-    }
-    
-    // Insert the formatted text
-    editor.value = beforeText + formattedText + afterText;
-    
-    // Set cursor position
-    const newCursorPos = start + cursorOffset;
-    editor.focus();
-    editor.setSelectionRange(newCursorPos, newCursorPos);
-    
-    // Update preview
-    updatePreview();
-}
-
-// EXPORT HTML BUTTON
-const exportHtmlBtn = document.getElementById('html');
-
-exportHtmlBtn.addEventListener('click', function() {
-    const markdownText = editor.value;
-    const htmlOutput = marked.parse(markdownText);
-    
-    const fullHtml = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exported Document</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            line-height: 1.6;
-            color: #333;
-        }
-        h1 { font-size: 32px; margin-top: 0; }
-        h2 { font-size: 24px; margin-top: 30px; }
-        h3 { font-size: 20px; }
-        code {
-            background: #f4f4f4;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-        }
-        pre {
-            background: #f4f4f4;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-        pre code {
-            background: none;
-            padding: 0;
-        }
-        blockquote {
-            border-left: 4px solid #3dd68c;
-            padding-left: 15px;
-            margin-left: 0;
-            color: #666;
-        }
-        a { color: #3dd68c; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
-${htmlOutput}
-</body>
-</html>`;
-    
-    // Create blob and download
-    const blob = new Blob([fullHtml], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'document.html';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+toolbarButtons.forEach((button) => {
+  button.addEventListener("click", function () {
+    const action = this.getAttribute("data-action");
+    insertFormatting(action);
+  });
 });
 
-// EXPORT MARKDOWN BUTTON
-const exportMdBtn = document.getElementById('md');
-
-exportMdBtn.addEventListener('click', function() {
-    const markdownText = editor.value;
-    
-    // Create blob and download
-    const blob = new Blob([markdownText], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'document.md';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+fileContainer.addEventListener("click", (event) => {
+  const fileCard = event.target.closest("#fileCard");
+  if (fileCard) {
+    reaccessingFiles(event); // Pass the event object
+  }
 });
+
+
+localStorage.getItem("files");
