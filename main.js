@@ -1,6 +1,12 @@
 "use strict";
-// to do 
-// debugger
+// to do
+// fix the error in the displaying file
+// add the resave to same path function
+// Finish the ui refurbishing
+// 
+// 
+
+
 
 // get elements for easy access
 const loadingPage = document.getElementById("welcomePage");
@@ -22,8 +28,9 @@ const modal = document.getElementById("modal");
 const greetUser = document.getElementById("greetUser");
 const getStarted = document.getElementById("getStarted");
 const backButton = document.getElementById("backButton");
-var deleteButton;
-var editButton;
+const clearAll = document.getElementById("clearAll")
+let deleteButton;
+let editButton;
 
 homePage.classList.add("hidden");
 markdownPage.classList.add("hidden");
@@ -111,10 +118,11 @@ function updatePreview() {
 }
 
 // Retrieve files from localStorage or initialize an empty array
-const files = JSON.parse(localStorage.getItem("files") || "[]");
+let files = JSON.parse(localStorage.getItem("files") || "[]");
 
 // Save files to localStorage
 function saveToLocalStorage() {
+  debugger;
   const File = {
     id: Date.now(),
     name: newFileName.value, // Use .value instead of .innerText
@@ -138,6 +146,7 @@ function saveToLocalStorage() {
 // displaya each file saved to local storage
 function displayingFile() {
   // to display each file in local storage
+  fileContainer.innerHTML = " "
 
   files.forEach((file) => {
     const newFile = `
@@ -280,6 +289,11 @@ newFileButtons.forEach((btn) =>
   btn.addEventListener("click", () => createNewFilefunc())
 );
 
+clearAll.addEventListener("click", function(){
+  files = [];
+  displayingFile();
+})
+
 backButton.addEventListener("click",function(){
   welcomePage.classList.add("hidden");
   homePage.classList.remove("hidden");
@@ -291,7 +305,6 @@ editor.addEventListener("input", () => updatePreview());
 saveButton.addEventListener("click", () => {
   saveToLocalStorage();
   console.log("pushed new file to localstorage");
-  displayingFile();
 });
 
 toolbarButtons.forEach((button) => {
