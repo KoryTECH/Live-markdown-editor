@@ -9,7 +9,6 @@
 
 
 // get elements for easy access
-const loadingPage = document.getElementById("welcomePage");
 const homePage = document.getElementById("editorHomePage");
 const markdownPage = document.getElementById("markdownInterface");
 const inputFileName = document.getElementById("inputFileName");
@@ -32,16 +31,16 @@ const clearAll = document.getElementById("clearAll")
 let deleteButton;
 let editButton;
 
-homePage.classList.add("hidden");
+
 markdownPage.classList.add("hidden");
 
 // onload display loading welcome screen
 
-setTimeout(function () {
-  loadingPage.classList.add("hidden");
-  checkForUserName();
-  displayingFile();
-}, 1500);
+// setTimeout(function () {
+//   loadingPage.classList.add("hidden");
+//   checkForUserName();
+//   displayingFile();
+// }, 1500);
 
 // to create a new file
 function createNewFilefunc() {
@@ -268,9 +267,8 @@ function checkForUserName(){
     modal.classList.add("hidden")
   }
   else {
-    homePage.classList.add("hidden");
+    homePage.classList.remove("hidden");
     markdownPage.classList.add("hidden")
-    loadingPage.classList.add("hidden")
     modal.classList.remove("hidden");
   }
 }
@@ -285,6 +283,9 @@ getStarted.addEventListener("click", function (){
 
 })
 
+checkForUserName();
+displayingFile();
+
 newFileButtons.forEach((btn) =>
   btn.addEventListener("click", () => createNewFilefunc())
 );
@@ -295,7 +296,6 @@ clearAll.addEventListener("click", function(){
 })
 
 backButton.addEventListener("click",function(){
-  welcomePage.classList.add("hidden");
   homePage.classList.remove("hidden");
   markdownPage.classList.add("hidden")
 })

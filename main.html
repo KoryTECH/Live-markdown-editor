@@ -12,31 +12,17 @@
 
 </head>
 <body class="bg-[#101922] flex flex-col justify-center items-center">
-    <div id="modal" class="hidden flex flex-col gap-y-4 bg-blue-600 shadow-lg p-10 justify-center items-center text-white rounded-xl h-[30em] w-[40em] relative top-[100px] ">
-        <button type="button" class="fixed right-[600px] top-6 bg-blue-900 p-2 rounded-full size-10">&#x2715;</button>
-        <span class="text-[2rem] font-extrabold">Welcome!</span>
-        <span class="">Tell us your name so we can say hello properly</span>
-        <span class="flex flex-col gap-y-2">
-            Full name
-             <input type="text" name="Username" id="userName" class="p-2 rounded-md outline-none text-black">
+    <div id="modal" class="z-40 text-center flex flex-col gap-y-4 bg-[#1e293b] shadow-lg p-10 justify-center items-center text-white rounded-xl h-[30em] w-[40em] relative top-[100px] backdrop-blur-2xl ">
+        <button type="button" class="size absolute top-5 right-10 p-2 rounded-full text-gray-400 hover:text-white transition-colors">&#x2715;</button>
+        <span class="text-[2rem] font-extrabold align-center">Welcome to MarkdownStudio!</span>
+        <span class="align-center">Let's get your workspace set up and ready for your first masterpiece.</span>
+        <span class="flex flex-col gap-y-2 text-left">
+            <p class="font-bold">Your name</p>
+             <input type="text" name="Username" id="userName" placeholder="Enter your name" class=" active:outline-blue-400 bg-[#0f172a] p-2 rounded-md outline-none text-white w-96 h-[50px]">
         </span>
-        <button type="button" id="getStarted" class="w-40 h-10 bg-blue-700 text-white rounded-lg">Get Started</button>
+        <button type="button" id="getStarted" class="w-52 h-10 bg-[#3b82f6] font-bold text-white rounded-lg hover:opacity-[.5] active:opacity-[1]">Get Started</button>
     </div>
-    <section id="welcomePage" class=" flex justify-center items-center flex-col gap-y-10 py-24">
-        <div class="w-24 h-28 rounded-md bg-[#102336] flex justify-center items-center text-white"><i class="fa-solid fa-m bg-blue-600 p-5 rounded-xl"></i></div>
-        <div class="text-[3rem] text-white font-bold text-center">Scribe Markdown</div>
-        <div class="text-blue-200 font-awesome text-[1.2rem] text-center">Your minimalist desktop markdown editor for
-            clean, <br> focused writing.</div>
-        <div>
-            <!-- From Uiverse.io by Javierrocadev -->
-            <div class="flex flex-row gap-2">
-                <div class="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]"></div>
-                <div class="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]"></div>
-                <div class="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]"></div>
-            </div>
-        </div>
-    </section>
-    <section id="editorHomePage" class="flex w-full">
+    <section id="editorHomePage" class="flex w-full z-30 fixed top-0">
         <div id="sideBar"
             class=" border-[1px] border-l border-[#102336] p-3 w-[20%] hidden sticky left-0 top-0 sm:flex sm:flex-col sm:justify-between sm:h-[100vh]">
             <div class="flex gap-x-4">
