@@ -136,8 +136,8 @@ function saveToLocalStorage() {
   // Update localStorage with the updated files array
   localStorage.setItem("files", JSON.stringify(files));
   console.log("saved to localstorage");
-  markdownPage.classList.add("hidden");
-  homePage.classList.remove("hidden");
+  // markdownPage.classList.add("hidden");
+  // homePage.classList.remove("hidden");
   displayingFile()
 }
 
