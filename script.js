@@ -30,6 +30,7 @@ const backButton = document.getElementById("backButton");
 const clearAll = document.getElementById("clearAll")
 let deleteButton;
 let editButton;
+let currentFileId = null;
 
 
 markdownPage.classList.add("hidden");
@@ -44,6 +45,8 @@ markdownPage.classList.add("hidden");
 
 // to create a new file
 function createNewFilefunc() {
+  currentFileId = null;  // Reset - this is a NEW file
+  newFileName.value = "";  // Clear filename input
   homePage.classList.add("hidden");
   markdownPage.classList.remove("hidden");
   //   make textarea blank for new file
@@ -120,24 +123,24 @@ let files = JSON.parse(localStorage.getItem("files") || "[]");
 
 // Save files to localStorage
 function saveToLocalStorage() {
-  debugger;
+  if(currentFileId){
+    const fileIndex = files.findIndex(f => f.id === currentFileId);
+    files[fileIndex].content = editor.value;
+    files[fileIndex].name = newFileName.value;
+  }
+  else {
   const File = {
     id: Date.now(),
     name: newFileName.value, // Use .value instead of .innerText
     content: editor.value,
-    dateCreated: new Date().toDateString(),
-
-    
+    dateCreated: new Date().toDateString(),    
   };
-
+files.push(File);
+}
   // Add the new file to the files array
-  files.push(File);
   console.log("pushing");
   // Update localStorage with the updated files array
   localStorage.setItem("files", JSON.stringify(files));
-  console.log("saved to localstorage");
-  // markdownPage.classList.add("hidden");
-  // homePage.classList.remove("hidden");
   displayingFile()
 }
 
@@ -175,6 +178,7 @@ function reaccessingFiles(event) {
   const fileName = fileNameElement.textContent;
 
   const file = files.find((f) => f.name === fileName);
+  currentFileId = file.id; // Store the current file ID for future reference (e.g., updating or deleting)
   if (file) {
     editor.value = file.content;
     newFileName.value = file.name;
@@ -313,12 +317,22 @@ toolbarButtons.forEach((button) => {
   });
 });
 
+// Edit button - open file for editing
 fileContainer.addEventListener("click", (event) => {
-  const fileCard = event.target.closest("#fileCard");
-  if (fileCard) {
-    reaccessingFiles(event); // Pass the event object
+  if (event.target.closest("#editButton")) {
+    const fileCard = event.target.closest("#fileCard");
+    const fileNameElement = fileCard.querySelector("#savedFileName");
+    const fileName = fileNameElement.textContent;
+    const file = files.find(f => f.name === fileName);
+    if (file) {
+      currentFileId = file.id;
+      editor.value = file.content;
+      newFileName.value = file.name;
+      markdownPage.classList.remove("hidden");
+      homePage.classList.add("hidden");
+      updatePreview();
+    }
   }
 });
-
 
 localStorage.getItem("files");
