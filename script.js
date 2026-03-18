@@ -24,6 +24,7 @@ const fileContainer = document.getElementById("files");
 const fileCard = document.querySelectorAll("#fileCard");
 const modal = document.getElementById("modal");
 // const userName = document.getElementById("userName").value;
+const userNameInput = document.getElementById("userName");
 const greetUser = document.getElementById("greetUser");
 const getStarted = document.getElementById("getStarted");
 const backButton = document.getElementById("backButton");
@@ -31,6 +32,7 @@ const clearAll = document.getElementById("clearAll")
 let deleteButton;
 let editButton;
 let currentFileId = null;
+const ModalCloseBtn = document.getElementById("modalCloseBtn");
 
 
 markdownPage.classList.add("hidden");
@@ -276,6 +278,21 @@ function checkForUserName(){
   }
 }
 
+modalCloseBtn.addEventListener("click", function(){
+  modal.classList.add("hidden")
+  homePage.classList.remove("hidden")
+})
+
+userNameInput.addEventListener("keypress", function(event){
+if(event.key === "Enter"){
+  const userName = document.getElementById("userName").value;
+  localStorage.setItem("username", userName)
+  modal.classList.add("hidden")
+  homePage.classList.remove("hidden")
+  greetUser.innerText = `Welcome Back ${userName}!`;
+  homePage.classList.remove("hidden")
+}})
+
 getStarted.addEventListener("click", function (){
   const userName = document.getElementById("userName").value;
   localStorage.setItem("username", userName)
@@ -332,6 +349,14 @@ fileContainer.addEventListener("click", (event) => {
       homePage.classList.add("hidden");
       updatePreview();
     }
+  }
+  if(event.target.closest('#deleteButton')){
+    const fileCardToDelete = event.target.closest("#fileCard");
+    const fileNameElementToDelete = fileCardToDelete.querySelector("#savedFileName");
+    const fileNameToDelete = fileNameElementToDelete.textContent;
+    files = files.filter(f => f.name !== fileNameToDelete);
+    localStorage.setItem("files", JSON.stringify(files));
+    displayingFile();
   }
 });
 
