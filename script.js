@@ -33,9 +33,23 @@ let deleteButton;
 let editButton;
 let currentFileId = null;
 const ModalCloseBtn = document.getElementById("modalCloseBtn");
+const notification = document.getElementById("notification");
 
 
 markdownPage.classList.add("hidden");
+
+// Show notification that auto-hides after 5 seconds
+function showNotification(message) {
+  notification.innerText = message;
+  notification.classList.remove("hidden");
+  notification.classList.add("notification-slide");
+  
+  // Auto-hide after 5 seconds
+  setTimeout(() => {
+    notification.classList.add("hidden");
+    notification.classList.remove("notification-slide");
+  }, 5000);
+}
 
 // onload display loading welcome screen
 
@@ -169,6 +183,8 @@ function displayingFile() {
     editButton = document.querySelectorAll("editButton")
     fileContainer.innerHTML += newFile;
   });
+  notification.classList.remove("hidden");
+  notification.innerText = "Files loaded successfully!";
 }
 
 // opening old file for update or anything 
@@ -291,6 +307,8 @@ if(event.key === "Enter"){
   homePage.classList.remove("hidden")
   greetUser.innerText = `Welcome Back ${userName}!`;
   homePage.classList.remove("hidden")
+  notification.classList.remove("hidden");
+  notification.innerText = "Welcome to MarkdownStudio!";
 }})
 
 getStarted.addEventListener("click", function (){
@@ -300,7 +318,8 @@ getStarted.addEventListener("click", function (){
   homePage.classList.remove("hidden")
   greetUser.innerText = `Welcome Back ${userName}!`;
   homePage.classList.remove("hidden")
-
+  notification.classList.remove("hidden");
+  notification.innerText = "Welcome to MarkdownStudio!";
 })
 
 checkForUserName();
@@ -349,6 +368,8 @@ fileContainer.addEventListener("click", (event) => {
       homePage.classList.add("hidden");
       updatePreview();
     }
+    notification.classList.remove("hidden");
+    notification.innerText = "File opened for editing!";
   }
   if(event.target.closest('#deleteButton')){
     const fileCardToDelete = event.target.closest("#fileCard");
@@ -357,6 +378,8 @@ fileContainer.addEventListener("click", (event) => {
     files = files.filter(f => f.name !== fileNameToDelete);
     localStorage.setItem("files", JSON.stringify(files));
     displayingFile();
+    notification.classList.remove("hidden");
+    notification.innerText = "File deleted successfully!";
   }
 });
 

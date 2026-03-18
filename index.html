@@ -6,28 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scribe markdown</title>
     <link rel="stylesheet" href="output.css">
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <style>
+        @keyframes slideInFromRight {
+            0% {
+                transform: translateX(400px);
+                opacity: 0;
+                transition: all .5s ease-in;
+            }
+            50% {
+                transform: translateX(0);
+                opacity: 1;
+                transition: all .5s ease-out;
+            }
+            100% {
+                transform: translateX(400px);
+                opacity: 0;
+                transition: all .5s ease-in;
+            }
+        }
+        .notification-slide {
+            animation: slideInFromRight 10s ease-out forwards;
+        }
+    </style>
 </head>
+
 <body class="bg-[#101922] flex flex-col justify-center items-center">
-    <div id="modal" class="hidden z-40 text-center flex flex-col gap-y-6 bg-[#1e293b] backdrop-blur-2xl shadow-lg p-10 justify-center items-center text-white rounded-xl h-[30em] w-[40em] relative top-[100px] backdrop-blur-2xl ">
-        <button id="modalCloseBtn" type="button" class="size absolute top-5 right-10 p-2 rounded-full text-gray-400 hover:text-white transition-colors">&#x2715;</button>
+    <div id="modal"
+        class="hidden z-40 text-center flex flex-col gap-y-6 bg-[#1e293b] backdrop-blur-2xl shadow-lg p-10 justify-center items-center text-white rounded-xl h-[30em] w-[40em] relative top-[100px] backdrop-blur-2xl ">
+        <button id="modalCloseBtn" type="button"
+            class="size absolute top-5 right-10 p-2 rounded-full text-gray-400 hover:text-white transition-colors">&#x2715;</button>
         <span class="text-[2rem] font-extrabold align-center">Welcome to MarkdownStudio!</span>
         <span class="align-center">Let's get your workspace set up and ready for your first masterpiece.</span>
         <span class="flex flex-col gap-y-2 text-left">
             <p class="font-bold">Your name</p>
-             <input type="text" name="Username" id="userName" placeholder="Enter your name" class=" active:outline-blue-400 bg-[#0f172a] p-2 rounded-md outline-none text-white w-96 h-[50px]">
+            <input type="text" name="Username" id="userName" placeholder="Enter your name"
+                class=" active:outline-blue-400 bg-[#0f172a] p-2 rounded-md outline-none text-white w-96 h-[50px]">
         </span>
-        <button type="button" id="getStarted" class="w-52 h-10 bg-[#3b82f6] font-bold text-white rounded-lg hover:opacity-[.5] active:opacity-[1] font-['Font_Awesome_6_Free'] font-black">Get Started &#xf054;</button>
+        <button type="button" id="getStarted"
+            class="w-52 h-10 bg-[#3b82f6] font-bold text-white rounded-lg hover:opacity-[.5] active:opacity-[1] font-['Font_Awesome_6_Free'] font-black">Get
+            Started &#xf054;</button>
     </div>
     <section id="editorHomePage" class="hidden flex w-full z-30 fixed top-0">
         <div id="sideBar"
             class=" border-[1px] border-l border-[#102336] p-3 w-[20%] hidden sticky left-0 top-0 sm:flex sm:flex-col sm:justify-between sm:h-[100vh]">
             <div class="flex gap-x-4">
-                <span class="bg-[#102336] w-20 h-24 rounded-md text-gray-400 flex justify-center items-center text-[2rem]"><i class="fa-solid fa-book h-70"></i></span>
+                <span
+                    class="bg-[#102336] w-20 h-24 rounded-md text-gray-400 flex justify-center items-center text-[2rem]"><i
+                        class="fa-solid fa-book h-70"></i></span>
                 <span class="flex justify-center items-center flex-col">
                     <p class="text-[1.5rem] text-white font-bold">Markdown</p>
                     <p class="text-blue-200 font-awesome text-[.9rem]">Local Editor</p>
@@ -70,20 +98,24 @@
     <section id="markdownInterface" class="hidden w-[100%] h-[100%] flex flex-col justify-center items-center">
         <div id="markdownNavBar" class="bg-white p-4 flex justify-between sticky top-0 w-full">
             <span class="flex gap-x-8 justify-center items-center">
-                <p id="backButton" class="text-[1.5rem] text-black active:bg-white hover:animate-ping"><i class="fa-solid fa-arrow-left mr-2"></i></p>
+                <p id="backButton" class="text-[1.5rem] text-black active:bg-white hover:animate-ping"><i
+                        class="fa-solid fa-arrow-left mr-2"></i></p>
                 <p class="text-[1.2rem] font-bold"><i class="fa-solid fa-pen-to-square"></i> Markdown studio</p>
                 <input type="text" name="" id="newFileName" placeholder="Enter file name"
                     class="InputFileName bg-[#101922] p-3 text-white rounded-lg">
             </span>
             <span class="flex gap-x-3">
-                <button type="button" id="saveButton" class="px-3 py-2 bg-blue-700 text-white rounded-xl gap-x-2 flex justify-center items-center"> <i class="fa-solid fa-floppy-disk"></i>Save</button>
-                <button type="button" id="downloadButton" class="p-3 text-[1.5rem]"><i class="fa-solid fa-download"></i></button>
+                <button type="button" id="saveButton"
+                    class="px-3 py-2 bg-blue-700 text-white rounded-xl gap-x-2 flex justify-center items-center"> <i
+                        class="fa-solid fa-floppy-disk"></i>Save</button>
+                <button type="button" id="downloadButton" class="p-3 text-[1.5rem]"><i
+                        class="fa-solid fa-download"></i></button>
             </span>
         </div>
         <div class="w-full flex sticky top-[5.7rem] backdrop-blur-2xl">
             <span class="w-[50%] bg-transparent h-10 flex justify-between items-center px-4 text-blue-200">
                 <p class="">EDITOR</p>
-                <p class="">UTF-8  Markdown</p>
+                <p class="">UTF-8 Markdown</p>
             </span>
             <span class="w-[50%] bg-gray-300 h-10 px-4 flex justify-between items-center">
                 <p class="text-gray-400">LIVE PREVIEW</p>
@@ -91,39 +123,43 @@
             </span>
         </div>
         <div class="w-full flex min-h-screen">
-            <textarea name="" id="editor" class="w-[50%] bg-transparent border-x-[1px] border-gray-300 text-white outline-none p-3"></textarea>
+            <textarea name="" id="editor"
+                class="w-[50%] bg-transparent border-x-[1px] border-gray-300 text-white outline-none p-3"></textarea>
             <iframe id="livePreview" class="w-[50%] bg-white text-black"></iframe>
         </div>
-        <div id="toolBar" class="gap-5 flex bg-[#101922] text-white p-3 justify-center items-center w-96 rounded-xl fixed bottom-[20px] border-1px border-[#1e293b]">
+        <div id="toolBar"
+            class="gap-5 flex bg-[#101922] text-white p-3 justify-center items-center w-96 rounded-xl fixed bottom-[20px] border-1px border-[#1e293b]">
             <button class="toolbar-btn" data-action="bold" title="Bold">
                 <i class="fa-solid fa-bold"></i>
-              </button>
-              <button class="toolbar-btn" data-action="italic" title="Italic">
+            </button>
+            <button class="toolbar-btn" data-action="italic" title="Italic">
                 <i class="fa-solid fa-italic"></i>
-              </button>
-              <button class="toolbar-btn" data-action="h1" title="Heading 1">
+            </button>
+            <button class="toolbar-btn" data-action="h1" title="Heading 1">
                 H1
-              </button>
-              <button class="toolbar-btn" data-action="h2" title="Heading 2">
+            </button>
+            <button class="toolbar-btn" data-action="h2" title="Heading 2">
                 H2
-              </button>
-              <button class="toolbar-btn" data-action="ul" title="Bullet List">
+            </button>
+            <button class="toolbar-btn" data-action="ul" title="Bullet List">
                 <i class="fa-solid fa-list"></i>
-              </button>
-              <button class="toolbar-btn" data-action="ol" title="Numbered List">
+            </button>
+            <button class="toolbar-btn" data-action="ol" title="Numbered List">
                 <i class="fa-solid fa-list-ol"></i>
-              </button>
-              <button class="toolbar-btn" data-action="code" title="Code Block">
+            </button>
+            <button class="toolbar-btn" data-action="code" title="Code Block">
                 <i class="fa-solid fa-code"></i>
-              </button>
-              <button class="toolbar-btn" data-action="link" title="Link">
+            </button>
+            <button class="toolbar-btn" data-action="link" title="Link">
                 <i class="fa-solid fa-link"></i>
-              </button>
-              <button class="toolbar-btn" data-action="img" title="Image">
+            </button>
+            <button class="toolbar-btn" data-action="img" title="Image">
                 <i class="fa-solid fa-image"></i>
-              </button>
+            </button>
         </div>
     </section>
+    <span id="notification"
+        class="hidden z-40 text-white fixed bottom-[10px] right-[10px] rounded-lg bg-green-700 p-3 notification-slide">Konichiwa</span>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="script.js"></script>
