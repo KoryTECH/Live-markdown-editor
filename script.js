@@ -23,22 +23,22 @@ const toolbarButtons = document.querySelectorAll(".toolbar-btn");
 const fileContainer = document.getElementById("files");
 const fileCard = document.querySelectorAll("#fileCard");
 const modal = document.getElementById("modal");
-// const userName = document.getElementById("userName").value;
+const SearchInput = document.getElementById("SearchInput");
 const userNameInput = document.getElementById("userName");
 const greetUser = document.getElementById("greetUser");
 const getStarted = document.getElementById("getStarted");
 const backButton = document.getElementById("backButton");
 const clearAll = document.getElementById("clearAll")
+const ModalCloseBtn = document.getElementById("modalCloseBtn");
+const notification = document.getElementById("notification");
 let deleteButton;
 let editButton;
 let currentFileId = null;
-const ModalCloseBtn = document.getElementById("modalCloseBtn");
-const notification = document.getElementById("notification");
 
 
 markdownPage.classList.add("hidden");
 
-// Show notification that auto-hides after 5 seconds
+// show notification that auto-hides after 5 seconds
 function showNotification(message) {
   notification.innerText = message;
   notification.classList.remove("hidden");
@@ -62,11 +62,11 @@ function showNotification(message) {
 // to create a new file
 function createNewFilefunc() {
   currentFileId = null;  // Reset - this is a NEW file
-  newFileName.value = "";  // Clear filename input
   homePage.classList.add("hidden");
   markdownPage.classList.remove("hidden");
   //   make textarea blank for new file
   editor.value = "";
+  showNotification("New file created!");
 }
 
 // to convert the inputted text to markdown format
@@ -158,6 +158,7 @@ files.push(File);
   // Update localStorage with the updated files array
   localStorage.setItem("files", JSON.stringify(files));
   displayingFile()
+  showNotification("File saved successfully!");
 }
 
 // displaya each file saved to local storage
@@ -183,8 +184,7 @@ function displayingFile() {
     editButton = document.querySelectorAll("editButton")
     fileContainer.innerHTML += newFile;
   });
-  notification.classList.remove("hidden");
-  notification.innerText = "Files loaded successfully!";
+
 }
 
 // opening old file for update or anything 
@@ -204,6 +204,7 @@ function reaccessingFiles(event) {
     homePage.classList.add("hidden");
   }
   updatePreview()
+  showNotification("File opened for editing!");
 }
 
 // function getUserName(){
@@ -280,6 +281,7 @@ function insertFormatting(action) {
   updatePreview();
 }
 
+
 function checkForUserName(){
   const storedUserName = localStorage.getItem("username");
   greetUser.innerText = `Welcome Back ${storedUserName}!`;
@@ -307,8 +309,7 @@ if(event.key === "Enter"){
   homePage.classList.remove("hidden")
   greetUser.innerText = `Welcome Back ${userName}!`;
   homePage.classList.remove("hidden")
-  notification.classList.remove("hidden");
-  notification.innerText = "Welcome to MarkdownStudio!";
+  showNotification("Welcome to MarkdownStudio!");
 }})
 
 getStarted.addEventListener("click", function (){
@@ -318,12 +319,23 @@ getStarted.addEventListener("click", function (){
   homePage.classList.remove("hidden")
   greetUser.innerText = `Welcome Back ${userName}!`;
   homePage.classList.remove("hidden")
-  notification.classList.remove("hidden");
-  notification.innerText = "Welcome to MarkdownStudio!";
+  showNotification("Welcome to MarkdownStudio!");
 })
 
 checkForUserName();
 displayingFile();
+
+searchInput.addEventListener("input", function(event){
+  const SearchTerm = event.target.value.toLowerCase();
+  
+  if(searchterm === ""){
+    displayingFile()
+    return
+  }
+  const filteredFiles = files.filter(f.name.toLowerCase().includes(SearchTerm));
+
+  displayingFile(filteredFiles);
+})
 
 newFileButtons.forEach((btn) =>
   btn.addEventListener("click", () => createNewFilefunc())
@@ -332,6 +344,7 @@ newFileButtons.forEach((btn) =>
 clearAll.addEventListener("click", function(){
   files = [];
   displayingFile();
+  showNotification("All files cleared!");
 })
 
 backButton.addEventListener("click",function(){
@@ -353,33 +366,21 @@ toolbarButtons.forEach((button) => {
   });
 });
 
+
 // Edit button - open file for editing
 fileContainer.addEventListener("click", (event) => {
   if (event.target.closest("#editButton")) {
     const fileCard = event.target.closest("#fileCard");
-    const fileNameElement = fileCard.querySelector("#savedFileName");
-    const fileName = fileNameElement.textContent;
-    const file = files.find(f => f.name === fileName);
-    if (file) {
-      currentFileId = file.id;
-      editor.value = file.content;
-      newFileName.value = file.name;
-      markdownPage.classList.remove("hidden");
-      homePage.classList.add("hidden");
-      updatePreview();
-    }
-    notification.classList.remove("hidden");
-    notification.innerText = "File opened for editing!";
+    reaccessingFiles({ target: fileCard });
   }
   if(event.target.closest('#deleteButton')){
-    const fileCardToDelete = event.target.closest("#fileCard");
-    const fileNameElementToDelete = fileCardToDelete.querySelector("#savedFileName");
-    const fileNameToDelete = fileNameElementToDelete.textContent;
-    files = files.filter(f => f.name !== fileNameToDelete);
+    const fileNameToDelete = event.target.closest("#fileCard").querySelector("#savedFileName").textContent;
+    const fileToDelete = files.find(f => f.name === fileNameToDelete);
+    files = files.filter(f => f.id !== fileToDelete.id);
+    
     localStorage.setItem("files", JSON.stringify(files));
     displayingFile();
-    notification.classList.remove("hidden");
-    notification.innerText = "File deleted successfully!";
+    showNotification("File deleted successfully!");
   }
 });
 

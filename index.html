@@ -11,24 +11,22 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         @keyframes slideInFromRight {
-            0% {
+            from {
                 transform: translateX(400px);
                 opacity: 0;
                 transition: all .5s ease-in;
             }
-            50% {
+
+            to {
                 transform: translateX(0);
                 opacity: 1;
                 transition: all .5s ease-out;
             }
-            100% {
-                transform: translateX(400px);
-                opacity: 0;
-                transition: all .5s ease-in;
-            }
+
         }
+
         .notification-slide {
-            animation: slideInFromRight 10s ease-out forwards;
+            animation: slideInFromRight 0.5s ease-out forwards;
         }
     </style>
 </head>
@@ -101,7 +99,7 @@
                 <p id="backButton" class="text-[1.5rem] text-black active:bg-white hover:animate-ping"><i
                         class="fa-solid fa-arrow-left mr-2"></i></p>
                 <p class="text-[1.2rem] font-bold"><i class="fa-solid fa-pen-to-square"></i> Markdown studio</p>
-                <input type="text" name="" id="newFileName" placeholder="Enter file name"
+                <input type="text" name="" id="newFileName" placeholder="Enter file name" value="Untitled document"
                     class="InputFileName bg-[#101922] p-3 text-white rounded-lg">
             </span>
             <span class="flex gap-x-3">
