@@ -23,7 +23,7 @@ const toolbarButtons = document.querySelectorAll(".toolbar-btn");
 const fileContainer = document.getElementById("files");
 const fileCard = document.querySelectorAll("#fileCard");
 const modal = document.getElementById("modal");
-const SearchInput = document.getElementById("SearchInput");
+const searchInput = document.getElementById("searchInput");
 const userNameInput = document.getElementById("userName");
 const greetUser = document.getElementById("greetUser");
 const getStarted = document.getElementById("getStarted");
@@ -56,7 +56,7 @@ function showNotification(message) {
 // setTimeout(function () {
 //   loadingPage.classList.add("hidden");
 //   checkForUserName();
-//   displayingFile();
+//   displayingFile(files);
 // }, 1500);
 
 // to create a new file
@@ -157,16 +157,16 @@ files.push(File);
   console.log("pushing");
   // Update localStorage with the updated files array
   localStorage.setItem("files", JSON.stringify(files));
-  displayingFile()
+  displayingFile(files)
   showNotification("File saved successfully!");
 }
 
 // displaya each file saved to local storage
-function displayingFile() {
+function displayingFile(array) {
   // to display each file in local storage
   fileContainer.innerHTML = " "
 
-  files.forEach((file) => {
+  array.forEach((file) => {
     const newFile = `
     <div id="fileCard" class="flex flex-col gap-2">
     <span id="blankspace" class="bg-[#0f1a30] w-64 h-48 rounded-xl hover:bg-[#0f192e] flex justify-center items-center text-[2rem] transition-colors duration-300 relative group cursor-pointer">
@@ -207,8 +207,8 @@ function reaccessingFiles(event) {
   showNotification("File opened for editing!");
 }
 
-// function getUserName(){
-
+// function fileSearchFunc(){
+  
 // }
 
 // toolbar functionality
@@ -323,13 +323,13 @@ getStarted.addEventListener("click", function (){
 })
 
 checkForUserName();
-displayingFile();
+displayingFile(files);
 
 searchInput.addEventListener("input", function(event){
-  const SearchTerm = event.target.value.toLowerCase();
+  const searchTerm = event.target.value.toLowerCase();
   
-  if(searchterm === ""){
-    displayingFile()
+  if(searchTerm === ""){
+    displayingFile(files)
     return
   }
   const filteredFiles = files.filter(f.name.toLowerCase().includes(SearchTerm));
@@ -343,7 +343,7 @@ newFileButtons.forEach((btn) =>
 
 clearAll.addEventListener("click", function(){
   files = [];
-  displayingFile();
+  displayingFile(files);
   showNotification("All files cleared!");
 })
 
@@ -379,7 +379,7 @@ fileContainer.addEventListener("click", (event) => {
     files = files.filter(f => f.id !== fileToDelete.id);
     
     localStorage.setItem("files", JSON.stringify(files));
-    displayingFile();
+    displayingFile(files);
     showNotification("File deleted successfully!");
   }
 });
