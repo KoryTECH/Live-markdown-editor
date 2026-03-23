@@ -45,14 +45,6 @@ function showNotification(message) {
   }, 5000);
 }
 
-// onload display loading welcome screen
-
-// setTimeout(function () {
-//   loadingPage.classList.add("hidden");
-//   checkForUserName();
-//   displayingFile(files);
-// }, 1500);
-
 // to create a new file
 function createNewFilefunc() {
   currentFileId = null;  // Reset - this is a NEW file
