@@ -332,7 +332,7 @@ searchInput.addEventListener("input", function(){
     displayingFile(files)
     return
   }
-  const filteredFiles = files.filter(f.name.toLowerCase().includes(searchTerm));
+  const filteredFiles = files.filter(file => file.name.toLowerCase().includes(searchTerm));
 
   displayingFile(filteredFiles);
 })
