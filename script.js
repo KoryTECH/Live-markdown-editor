@@ -1,12 +1,6 @@
 "use strict";
 // to do
-// fix the error in the displaying file
-// add the resave to same path function
 // Finish the ui refurbishing
-// 
-// 
-
-
 
 // get elements for easy access
 const homePage = document.getElementById("editorHomePage");
@@ -29,7 +23,7 @@ const greetUser = document.getElementById("greetUser");
 const getStarted = document.getElementById("getStarted");
 const backButton = document.getElementById("backButton");
 const clearAll = document.getElementById("clearAll")
-const ModalCloseBtn = document.getElementById("modalCloseBtn");
+const modalCloseBtn = document.getElementById("modalCloseBtn");
 const notification = document.getElementById("notification");
 let deleteButton;
 let editButton;
@@ -161,9 +155,8 @@ files.push(File);
   showNotification("File saved successfully!");
 }
 
-// displaya each file saved to local storage
+// displays each file in the array passed
 function displayingFile(array) {
-  // to display each file in local storage
   fileContainer.innerHTML = " "
 
   array.forEach((file) => {
@@ -184,7 +177,6 @@ function displayingFile(array) {
     editButton = document.querySelectorAll("editButton")
     fileContainer.innerHTML += newFile;
   });
-
 }
 
 // opening old file for update or anything 
@@ -196,7 +188,8 @@ function reaccessingFiles(event) {
   const fileName = fileNameElement.textContent;
 
   const file = files.find((f) => f.name === fileName);
-  currentFileId = file.id; // Store the current file ID for future reference (e.g., updating or deleting)
+  // Store the current file ID for future reference (e.g., updating or deleting)
+  currentFileId = file.id; 
   if (file) {
     editor.value = file.content;
     newFileName.value = file.name;
@@ -206,10 +199,6 @@ function reaccessingFiles(event) {
   updatePreview()
   showNotification("File opened for editing!");
 }
-
-// function fileSearchFunc(){
-  
-// }
 
 // toolbar functionality
 function insertFormatting(action) {
@@ -367,7 +356,7 @@ toolbarButtons.forEach((button) => {
 });
 
 
-// Edit button - open file for editing
+// Edit button and delete button - open file for editing and delete file respectively
 fileContainer.addEventListener("click", (event) => {
   if (event.target.closest("#editButton")) {
     const fileCard = event.target.closest("#fileCard");
