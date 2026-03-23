@@ -325,8 +325,8 @@ getStarted.addEventListener("click", function (){
 checkForUserName();
 displayingFile(files);
 
-searchInput.addEventListener("input", function(event){
-  const searchTerm = event.target.value.toLowerCase();
+searchInput.addEventListener("input", function(){
+  const searchTerm = searchInput.value.toLowerCase();
   
   if(searchTerm === ""){
     displayingFile(files)
