@@ -101,7 +101,7 @@
         </main>
     </section>
     <section id="markdownInterface" class="hidden w-[100%] h-[100%] flex flex-col justify-center items-center">
-        <div id="markdownNavBar" class="bg-white p-4 flex justify-between sticky top-0 w-full">
+        <div id="markdownNavBar" class="bg-white z-50 p-4 flex justify-between sticky top-0 w-full">
             <span class="flex gap-x-8 justify-center items-center">
                 <p id="backButton" class="text-[1.5rem] text-black active:bg-white hover:animate-ping"><i
                         class="fa-solid fa-arrow-left mr-2"></i></p>
@@ -127,9 +127,9 @@
                 <button type="button" class=""><i class="fa-solid fa-up-right-from-square"></i></button>
             </span> -->
         </div>
-        <div class="w-full flex min-h-screen">
-            <div id="textarea-heading" class="w-[50%] ">
-                <span class=" sticky top-0 w-full bg-transparent h-10 flex justify-between items-center px-4 text-blue-200">
+        <div class="w-full flex flex-col min-h-screen sm:flex-row">
+            <div id="textarea-heading" class="w-full sm:w-[50%] ">
+                <span class=" z-30 sticky top-[100px] w-full bg-transparent h-10 flex justify-between items-center px-4 text-blue-200">
                     <p class="">EDITOR</p>
                     <p class="">UTF-8 Markdown</p>
                 </span>
@@ -137,8 +137,8 @@
                     class="w-full bg-transparent border-x-[1px] border-gray-300 text-white outline-none p-3"></textarea>
 
             </div>
-            <div id="iframe-heading" class="w-[50%] ">
-                <span class="sticky top-0 w-full bg-gray-300 h-10 px-4 flex justify-between items-center">
+            <div id="iframe-heading" class="w-full sm:w-[50%] ">
+                <span class=" z-30 sticky top-[100px] w-full bg-gray-300 h-10 px-4 flex justify-between items-center">
                     <p class="text-gray-400">LIVE PREVIEW</p>
                     <button type="button" class=""><i class="fa-solid fa-up-right-from-square"></i></button>
                 </span>
