@@ -29,6 +29,12 @@
         .notification-slide {
             animation: slideInFromRight 0.5s ease-out forwards;
         }
+        #textarea-heading, #iframe-heading{
+            height: 100vh;
+        }
+        #editor,#livePreview{
+            height: 100%;
+        }
     </style>
 </head>
 
@@ -112,19 +118,34 @@
             </span>
         </div>
         <div class="w-full flex sticky top-[5.7rem] backdrop-blur-2xl">
-            <span class="w-[50%] bg-transparent h-10 flex justify-between items-center px-4 text-blue-200">
+            <!-- <span class="w-[50%] bg-transparent h-10 flex justify-between items-center px-4 text-blue-200">
                 <p class="">EDITOR</p>
                 <p class="">UTF-8 Markdown</p>
-            </span>
-            <span class="w-[50%] bg-gray-300 h-10 px-4 flex justify-between items-center">
+            </span> -->
+            <!-- <span class="w-[50%] bg-gray-300 h-10 px-4 flex justify-between items-center">
                 <p class="text-gray-400">LIVE PREVIEW</p>
                 <button type="button" class=""><i class="fa-solid fa-up-right-from-square"></i></button>
-            </span>
+            </span> -->
         </div>
         <div class="w-full flex min-h-screen">
-            <textarea name="" id="editor"
-                class="w-[50%] bg-transparent border-x-[1px] border-gray-300 text-white outline-none p-3"></textarea>
-            <iframe id="livePreview" class="w-[50%] bg-white text-black"></iframe>
+            <div id="textarea-heading" class="w-[50%] ">
+                <span class=" sticky top-0 w-full bg-transparent h-10 flex justify-between items-center px-4 text-blue-200">
+                    <p class="">EDITOR</p>
+                    <p class="">UTF-8 Markdown</p>
+                </span>
+                <textarea name="" id="editor"
+                    class="w-full bg-transparent border-x-[1px] border-gray-300 text-white outline-none p-3"></textarea>
+
+            </div>
+            <div id="iframe-heading" class="w-[50%] ">
+                <span class="sticky top-0 w-full bg-gray-300 h-10 px-4 flex justify-between items-center">
+                    <p class="text-gray-400">LIVE PREVIEW</p>
+                    <button type="button" class=""><i class="fa-solid fa-up-right-from-square"></i></button>
+                </span>
+                <iframe id="livePreview" class="w-full  bg-white text-black"></iframe>
+            </div>
+
+
         </div>
         <div id="toolBar"
             class="gap-5 flex bg-[#101922] text-white p-3 justify-center items-center w-96 rounded-xl fixed bottom-[20px] border-1px border-[#1e293b]">
