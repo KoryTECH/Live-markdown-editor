@@ -22,7 +22,7 @@ const userNameInput = document.getElementById("userName");
 const greetUser = document.getElementById("greetUser");
 const getStarted = document.getElementById("getStarted");
 const backButton = document.getElementById("backButton");
-const clearAll = document.getElementById("clearAll")
+const clearAll = document.getElementById("clearAll");
 const modalCloseBtn = document.getElementById("modalCloseBtn");
 const notification = document.getElementById("notification");
 let deleteButton;
@@ -328,10 +328,14 @@ clearAll.addEventListener("click", function(){
   showNotification("All files cleared!");
 })
 
-backButton.addEventListener("click",function(){
-  homePage.classList.remove("hidden");
-  markdownPage.classList.add("hidden")
-})
+if (backButton) {
+  backButton.addEventListener("click", function() {
+    if(homePage && markdownPage) {
+      homePage.classList.remove("hidden");
+      markdownPage.classList.add("hidden");
+    }
+  });
+}
 
 editor.addEventListener("input", () => updatePreview());
 

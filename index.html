@@ -10,178 +10,221 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         @keyframes slideInFromRight {
             from {
                 transform: translateX(400px);
                 opacity: 0;
-                transition: all .5s ease-in;
             }
-
             to {
                 transform: translateX(0);
                 opacity: 1;
-                transition: all .5s ease-out;
             }
-
         }
 
         .notification-slide {
             animation: slideInFromRight 0.5s ease-out forwards;
         }
-        #textarea-heading, #iframe-heading{
-            height: 100vh;
+
+        #textarea-heading,
+        #iframe-heading {
+            min-height: 100%;
         }
-        #editor,#livePreview{
+
+        #editor,
+        #livePreview {
             height: 100%;
         }
     </style>
 </head>
 
 <body class="bg-[#101922] flex flex-col justify-center items-center">
+
+    <!-- MODAL -->
     <div id="modal"
-        class="hidden z-40 text-center flex flex-col gap-y-6 bg-[#1e293b] backdrop-blur-2xl shadow-lg p-10 justify-center items-center text-white rounded-xl h-[30em] w-[40em] fixed top-[100px] backdrop-blur-2xl ">
+        class="hidden z-40 text-center flex flex-col gap-y-3 sm:gap-y-6 bg-[#1e293b] backdrop-blur-2xl shadow-lg p-4 sm:p-10 justify-center items-center text-white rounded-xl h-auto sm:h-[30em] w-[90vw] sm:w-[40em] fixed top-1/2 sm:top-[100px] -translate-y-1/2 sm:translate-y-0">
         <button id="modalCloseBtn" type="button"
-            class="size absolute top-5 right-10 p-2 rounded-full text-gray-400 hover:text-white transition-colors">&#x2715;</button>
-        <span class="text-[2rem] font-extrabold align-center">Welcome to MarkdownStudio!</span>
-        <span class="align-center">Let's get your workspace set up and ready for your first masterpiece.</span>
-        <span class="flex flex-col gap-y-2 text-left">
+            class="absolute top-5 right-10 p-2 rounded-full text-gray-400 hover:text-white transition-colors">&#x2715;</button>
+        <span class="text-[1.5rem] sm:text-[2rem] font-extrabold text-center">Welcome to MarkdownStudio!</span>
+        <span class="text-center">Let's get your workspace set up and ready for your first masterpiece.</span>
+        <span class="flex flex-col gap-y-2 text-left w-full items-center">
             <p class="font-bold">Your name</p>
             <input type="text" name="Username" id="userName" placeholder="Enter your name"
-                class=" active:outline-blue-400 bg-[#0f172a] p-2 rounded-md outline-none text-white w-96 h-[50px]">
+                class="active:outline-blue-400 bg-[#0f172a] p-2 rounded-md outline-none text-white w-[85vw] sm:w-96 h-[50px]">
         </span>
         <button type="button" id="getStarted"
-            class="w-52 h-10 bg-[#3b82f6] font-bold text-white rounded-lg hover:opacity-[.5] active:opacity-[1] font-['Font_Awesome_6_Free'] font-black">Get
+            class="w-[80%] sm:w-52 h-10 bg-[#3b82f6] font-bold text-white rounded-lg hover:opacity-[.5] active:opacity-[1]">Get
             Started &#xf054;</button>
     </div>
+
+    <!-- EDITOR HOME PAGE -->
     <section id="editorHomePage" class="hidden flex w-full z-30">
         <div id="sideBar"
-            class=" border-[1px] border-l border-[#102336] p-3 w-[20%] hidden sticky left-0 top-0 sm:flex sm:flex-col sm:justify-between sm:h-[100vh]">
+            class="border-[1px] border-l border-[#102336] p-3 w-[20%] hidden sticky left-0 top-0 sm:flex sm:flex-col sm:justify-between sm:h-[100vh]">
             <div class="flex gap-x-4">
                 <span
-                    class="bg-[#102336] w-20 h-24 rounded-md text-gray-400 flex justify-center items-center text-[2rem]"><i
-                        class="fa-solid fa-book h-70"></i></span>
+                    class="bg-[#102336] w-20 h-24 rounded-md text-gray-400 flex justify-center items-center text-[2rem]">
+                    <i class="fa-solid fa-book"></i>
+                </span>
                 <span class="flex justify-center items-center flex-col">
                     <p class="text-[1.5rem] text-white font-bold">Markdown</p>
-                    <p class="text-blue-200 font-awesome text-[.9rem]">Local Editor</p>
+                    <p class="text-blue-200 text-[.9rem]">Local Editor</p>
+                </span>
+            </div>
+            <button id="newFileButton" type="button"
+                class="p-4 text-white bg-blue-700 text-[1.1rem] rounded-md active:bg-blue-300">
+                + New document
+            </button>
+        </div>
+
+        <main class="px-4 sm:px-8 w-full h-auto gap-y-8 flex flex-col sm:w-[80%]">
+            <div id="navBar"
+                class="w-full border-b border-[#102336] h-16 flex items-center p-5 sticky top-0 backdrop-blur-2xl z-20">
+                <input type="text" name="" id="searchInput" placeholder="&#xf002; Search your files..."
+                    class="w-full sm:w-96 p-2 text-[0.9rem] sm:text-base bg-transparent border-[#102336] border-[1px] text-white outline-none rounded-[10px] font-['Font_Awesome_6_Free'] font-black placeholder:font-['Font_Awesome_6_Free'] placeholder:font-black">
+            </div>
+
+            <div class="flex flex-col gap-3 justify-between sm:flex-row">
+                <span>
+                    <p class="text-[1.75rem] sm:text-[2.5rem] text-white font-bold" id="greetUser">Welcome Back!</p>
+                    <p class="text-blue-200 text-[1.1rem]">Pick up where you left off or start something new.</p>
+                </span>
+                <span class="flex justify-center items-center w-full sm:w-auto">
+                    <button id="newFileButton" type="button"
+                        class="w-full sm:w-60 p-4 text-white bg-blue-700 text-[1rem] sm:text-[1.1rem] rounded-md active:bg-blue-300">
+                        + New document
+                    </button>
                 </span>
             </div>
 
-            <button id="newFileButton" type="button"
-                class=" p-4 text-white bg-blue-700 text-[1.1rem] rounded-md active:bg-blue-300"> + New document</button>
-        </div>
-        <main class="px-8 w-[100%] h-auto gap-y-8 flex flex-col sm:w-[80%]">
-            <div id="navBar"
-                class="w-full border-b border-[#102336] h-16  flex  items-center p-5 sticky top-0 backdrop-blur-2xl">
-                <input type="text" name="" id="searchInput" placeholder="&#xf002; Search your files..."
-                    class="w-full sm:w-96 p-2 bg-transparent border-[#102336] border-[1px] text-white outline-none rounded-[10px] font-['Font_Awesome_6_Free'] font-black placeholder:font-['Font_Awesome_6_Free'] placeholder:font-black">
-            </div>
-            <div class="flex flex-col gap-3 justify-between sm:flex-row">
-                <span>
-                    <p class="text-[2.5rem] text-white font-bold" id="greetUser">Welcome Back!</p>
-                    <p class="text-blue-200 font-awesome text-[1.1rem]">Pick up where you left off or start something
-                        new.</p>
-                </span>
-                <span class="flex justify-center items-center">
-                    <button id="newFileButton" type="button"
-                        class="w-60 p-4 text-white bg-blue-700 text-[1.1rem] rounded-md active:bg-blue-300"> + New
-                        document</button>
-                </span>
-            </div>
             <div class="flex justify-between">
                 <span class="text-[1.2rem] text-white font-bold">Recent documents</span>
-                <span><button class="bg-transparent text-blue-500" type="button" id="clearAll">Clear All</button></span>
+                <span>
+                    <button class="bg-transparent text-blue-500" type="button" id="clearAll">Clear All</button>
+                </span>
             </div>
+
             <div id="files" class="flex flex-wrap justify-start gap-4"></div>
+
             <div id="newFile"
-                class=" text-[1.1rem] font-extrabold text-white flex flex-col justify-center items-center border-dashed border-[1px] border-[#102336] bg-transparent w-64 h-48 rounded-xl px-8 hover:bg-blue-700 hover:delay-150 acive:bg-blue-300 ">
+                class="text-[1rem] sm:text-[1.1rem] font-extrabold text-white flex flex-col justify-center items-center border-dashed border-[1px] border-[#102336] bg-transparent w-[90%] sm:w-64 h-40 sm:h-48 rounded-xl px-4 sm:px-8 hover:bg-blue-700 hover:delay-150 active:bg-blue-300 cursor-pointer">
                 <p>+</p>
                 <p>Create New</p>
             </div>
         </main>
     </section>
-    <section id="markdownInterface" class="hidden w-[100%] h-[100%] flex flex-col justify-center items-center">
-        <div id="markdownNavBar" class="bg-white z-50 p-4 flex justify-between sticky top-0 w-full">
-            <span class="flex gap-x-8 justify-center items-center">
-                <p id="backButton" class="text-[1.5rem] text-black active:bg-white hover:animate-ping"><i
-                        class="fa-solid fa-arrow-left mr-2"></i></p>
-                <p class="text-[1.2rem] font-bold"><i class="fa-solid fa-pen-to-square"></i> Markdown studio</p>
+
+    <!-- MARKDOWN INTERFACE -->
+    <section id="markdownInterface"
+        class="hidden w-full flex flex-col justify-start items-center overflow-auto sm:h-screen sm:overflow-hidden">
+
+        <!-- Top Nav -->
+        <div id="markdownNavBar"
+            class="bg-white z-50 px-3 py-2 sm:px-5 sm:py-4 flex flex-row items-center justify-between sticky top-0 w-full flex-shrink-0 shadow-md gap-2">
+            <!-- Left: back + title -->
+            <span class="flex items-center gap-2 sm:gap-x-6 min-w-0">
+                <p id="backButton"
+                    class="text-base sm:text-[1.5rem] text-black cursor-pointer hover:animate-pulse flex-shrink-0">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </p>
+                <p class="text-[1rem] sm:text-[1.2rem] font-bold hidden sm:block whitespace-nowrap flex-shrink-0">
+                    <i class="fa-solid fa-pen-to-square"></i> Markdown studio
+                </p>
                 <input type="text" name="" id="newFileName" placeholder="Enter file name" value="Untitled document"
-                    class="InputFileName bg-[#101922] p-3 text-white rounded-lg">
+                    class="bg-[#101922] py-1.5 px-2 sm:p-3 text-white rounded-lg text-[0.75rem] sm:text-base min-w-0 w-full max-w-[160px] sm:max-w-xs">
             </span>
-            <span class="flex gap-x-3">
+            <!-- Right: save + download -->
+            <span class="flex items-center gap-2 sm:gap-x-3 flex-shrink-0">
                 <button type="button" id="saveButton"
-                    class="px-3 py-2 bg-blue-700 text-white rounded-xl gap-x-2 flex justify-center items-center"> <i
-                        class="fa-solid fa-floppy-disk"></i>Save</button>
-                <button type="button" id="downloadButton" class="p-3 text-[1.5rem]"><i
-                        class="fa-solid fa-download"></i></button>
+                    class="px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-700 text-white rounded-xl flex items-center gap-1 text-[0.75rem] sm:text-base whitespace-nowrap hover:bg-blue-600 active:bg-blue-800">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span class="hidden sm:inline">Save</span>
+                </button>
+                <button type="button" id="downloadButton"
+                    class="p-1.5 sm:p-3 text-base sm:text-[1.5rem] text-black hover:text-gray-600 active:text-black">
+                    <i class="fa-solid fa-download"></i>
+                </button>
             </span>
         </div>
-        <div class="w-full flex sticky top-[5.7rem] backdrop-blur-2xl">
-            <!-- <span class="w-[50%] bg-transparent h-10 flex justify-between items-center px-4 text-blue-200">
-                <p class="">EDITOR</p>
-                <p class="">UTF-8 Markdown</p>
-            </span> -->
-            <!-- <span class="w-[50%] bg-gray-300 h-10 px-4 flex justify-between items-center">
-                <p class="text-gray-400">LIVE PREVIEW</p>
-                <button type="button" class=""><i class="fa-solid fa-up-right-from-square"></i></button>
-            </span> -->
-        </div>
-        <div class="w-full flex flex-col min-h-screen sm:flex-row">
-            <div id="textarea-heading" class="w-full sm:w-[50%] ">
-                <span class=" z-30 sticky top-[100px] w-full bg-transparent h-10 flex justify-between items-center px-4 text-blue-200">
-                    <p class="">EDITOR</p>
-                    <p class="">UTF-8 Markdown</p>
+
+        <!-- Editor + Preview -->
+        <div class="w-full flex-1 flex flex-col sm:flex-row sm:overflow-hidden sm:min-h-0">
+            <!-- Editor -->
+            <div id="textarea-heading"
+                class="w-full sm:w-[50%] flex flex-col border-b sm:border-b-0 sm:border-r border-gray-600 sm:h-full sm:overflow-hidden">
+                <span
+                    class="w-full bg-[#101922] h-8 sm:h-10 flex justify-between items-center px-3 sm:px-4 text-[0.7rem] sm:text-sm text-blue-200 flex-shrink-0 border-b border-gray-700">
+                    <p class="font-semibold">EDITOR</p>
+                    <p class="text-[0.65rem] sm:text-xs">UTF-8 Markdown</p>
                 </span>
                 <textarea name="" id="editor"
-                    class="w-full bg-transparent border-x-[1px] border-gray-300 text-white outline-none p-3"></textarea>
-
+                    class="w-full bg-transparent border-none text-white outline-none p-3 text-[0.85rem] sm:text-base resize-none min-h-[50vh] sm:min-h-0 sm:flex-1 sm:overflow-auto"></textarea>
             </div>
-            <div id="iframe-heading" class="w-full sm:w-[50%] ">
-                <span class=" z-30 sticky top-[100px] w-full bg-gray-300 h-10 px-4 flex justify-between items-center">
-                    <p class="text-gray-400">LIVE PREVIEW</p>
-                    <button type="button" class=""><i class="fa-solid fa-up-right-from-square"></i></button>
+
+            <!-- Preview -->
+            <div id="iframe-heading"
+                class="w-full sm:w-[50%] flex flex-col sm:h-full sm:overflow-hidden">
+                <span
+                    class="w-full bg-gray-300 h-8 sm:h-10 px-3 sm:px-4 flex justify-between items-center text-[0.7rem] sm:text-sm flex-shrink-0 border-b border-gray-400">
+                    <p class="text-gray-600 font-semibold">LIVE PREVIEW</p>
+                    <button type="button"
+                        class="text-[0.8rem] sm:text-base text-gray-600 hover:text-gray-800 active:text-black">
+                        <i class="fa-solid fa-up-right-from-square"></i>
+                    </button>
                 </span>
-                <iframe id="livePreview" class="w-full  bg-white text-black"></iframe>
+                <iframe id="livePreview" class="w-full bg-white border-none min-h-[50vh] sm:min-h-0 sm:flex-1"></iframe>
             </div>
-
-
         </div>
+
+        <!-- Toolbar -->
         <div id="toolBar"
-            class="gap-5 flex bg-[#101922] text-white p-3 justify-center items-center w-96 rounded-xl fixed bottom-[20px] border-1px border-[#1e293b]">
-            <button class="toolbar-btn" data-action="bold" title="Bold">
+            class="gap-1 sm:gap-4 md:gap-5 flex flex-wrap bg-[#101922] text-white p-2 sm:p-3 md:p-4 justify-center items-center w-[95vw] sm:w-auto rounded-xl md:fixed md:bottom-[20px] md:right-[20px] border border-[#1e293b] flex-shrink-0 mt-2 sm:mt-0 md:mt-0">
+            <button class="toolbar-btn text-[0.65rem] sm:text-[0.75rem] md:text-base p-1 sm:p-2 md:p-3 sm:flex-auto hover:bg-gray-700 hover:text-blue-300 rounded transition-colors active:bg-gray-800"
+                data-action="bold" title="Bold">
                 <i class="fa-solid fa-bold"></i>
             </button>
-            <button class="toolbar-btn" data-action="italic" title="Italic">
+            <button class="toolbar-btn text-[0.65rem] sm:text-[0.75rem] md:text-base p-1 sm:p-2 md:p-3 sm:flex-auto hover:bg-gray-700 hover:text-blue-300 rounded transition-colors active:bg-gray-800"
+                data-action="italic" title="Italic">
                 <i class="fa-solid fa-italic"></i>
             </button>
-            <button class="toolbar-btn" data-action="h1" title="Heading 1">
-                H1
-            </button>
-            <button class="toolbar-btn" data-action="h2" title="Heading 2">
-                H2
-            </button>
-            <button class="toolbar-btn" data-action="ul" title="Bullet List">
+            <button class="toolbar-btn text-[0.65rem] sm:text-[0.75rem] md:text-base p-1 sm:p-2 md:p-3 sm:flex-auto hover:bg-gray-700 hover:text-blue-300 rounded transition-colors active:bg-gray-800"
+                data-action="h1" title="Heading 1">H1</button>
+            <button class="toolbar-btn text-[0.65rem] sm:text-[0.75rem] md:text-base p-1 sm:p-2 md:p-3 sm:flex-auto hover:bg-gray-700 hover:text-blue-300 rounded transition-colors active:bg-gray-800"
+                data-action="h2" title="Heading 2">H2</button>
+            <button class="toolbar-btn text-[0.65rem] sm:text-[0.75rem] md:text-base p-1 sm:p-2 md:p-3 sm:flex-auto hover:bg-gray-700 hover:text-blue-300 rounded transition-colors active:bg-gray-800"
+                data-action="ul" title="Bullet List">
                 <i class="fa-solid fa-list"></i>
             </button>
-            <button class="toolbar-btn" data-action="ol" title="Numbered List">
+            <button class="toolbar-btn text-[0.65rem] sm:text-[0.75rem] md:text-base p-1 sm:p-2 md:p-3 sm:flex-auto hover:bg-gray-700 hover:text-blue-300 rounded transition-colors active:bg-gray-800"
+                data-action="ol" title="Numbered List">
                 <i class="fa-solid fa-list-ol"></i>
             </button>
-            <button class="toolbar-btn" data-action="code" title="Code Block">
+            <button class="toolbar-btn text-[0.65rem] sm:text-[0.75rem] md:text-base p-1 sm:p-2 md:p-3 sm:flex-auto hover:bg-gray-700 hover:text-blue-300 rounded transition-colors active:bg-gray-800"
+                data-action="code" title="Code Block">
                 <i class="fa-solid fa-code"></i>
             </button>
-            <button class="toolbar-btn" data-action="link" title="Link">
+            <button class="toolbar-btn text-[0.65rem] sm:text-[0.75rem] md:text-base p-1 sm:p-2 md:p-3 sm:flex-auto hover:bg-gray-700 hover:text-blue-300 rounded transition-colors active:bg-gray-800"
+                data-action="link" title="Link">
                 <i class="fa-solid fa-link"></i>
             </button>
-            <button class="toolbar-btn" data-action="img" title="Image">
+            <button class="toolbar-btn text-[0.65rem] sm:text-[0.75rem] md:text-base p-1 sm:p-2 md:p-3 sm:flex-auto hover:bg-gray-700 hover:text-blue-300 rounded transition-colors active:bg-gray-800"
+                data-action="img" title="Image">
                 <i class="fa-solid fa-image"></i>
             </button>
         </div>
     </section>
+
+    <!-- NOTIFICATION -->
     <span id="notification"
         class="hidden z-40 text-white fixed bottom-[10px] right-[10px] rounded-lg bg-green-700 p-3 notification-slide">Konichiwa</span>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="script.js"></script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="script.js"></script>
 
 </html>
