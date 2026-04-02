@@ -12,7 +12,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        html {
+        html, body {
+            height: 100%;
+            margin: 0;
             scroll-behavior: smooth;
         }
 
@@ -31,14 +33,65 @@
             animation: slideInFromRight 0.5s ease-out forwards;
         }
 
-        #textarea-heading,
-        #iframe-heading {
-            min-height: 100%;
+        /* Markdown interface fills the full viewport */
+        #markdownInterface {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        #editor,
+        /* Editor/preview wrapper takes all remaining space after the navbar */
+        #editorPreviewWrapper {
+            flex: 1 1 0;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 640px) {
+            #editorPreviewWrapper {
+                flex-direction: row;
+                overflow: hidden;
+            }
+        }
+
+        /* Each pane fills its half */
+        #textarea-heading,
+        #iframe-heading {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            /* Mobile: give each pane half the remaining height */
+            flex: 1 1 50%;
+        }
+
+        /* Editor textarea fills the pane */
+        #editor {
+            flex: 1 1 0;
+            min-height: 0;
+            resize: none;
+            overflow-y: auto;
+        }
+
+        /* Preview iframe fills the pane */
         #livePreview {
-            height: 100%;
+            flex: 1 1 0;
+            min-height: 0;
+            border: none;
+        }
+
+        /* Mobile: stack panes vertically and each gets a fixed portion of the screen */
+        @media (max-width: 639px) {
+            #editorPreviewWrapper {
+                overflow-y: auto;
+            }
+
+            #textarea-heading,
+            #iframe-heading {
+                height: 50vh;
+                flex: none;
+            }
         }
     </style>
 </head>
@@ -120,12 +173,11 @@
     </section>
 
     <!-- MARKDOWN INTERFACE -->
-    <section id="markdownInterface"
-        class="hidden w-full flex flex-col justify-start items-center overflow-auto sm:h-screen sm:overflow-hidden">
+    <section id="markdownInterface" class="hidden w-full">
 
         <!-- Top Nav -->
         <div id="markdownNavBar"
-            class="bg-white z-50 px-3 py-2 sm:px-5 sm:py-4 flex flex-row items-center justify-between sticky top-0 w-full flex-shrink-0 shadow-md gap-2">
+            class="bg-white z-50 px-3 py-2 sm:px-5 sm:py-4 flex flex-row items-center justify-between w-full flex-shrink-0 shadow-md gap-2">
             <!-- Left: back + title -->
             <span class="flex items-center gap-2 sm:gap-x-6 min-w-0">
                 <p id="backButton"
@@ -153,22 +205,20 @@
         </div>
 
         <!-- Editor + Preview -->
-        <div class="w-full flex-1 flex flex-col sm:flex-row sm:overflow-hidden sm:min-h-0">
-            <!-- Editor -->
-            <div id="textarea-heading"
-                class="w-full sm:w-[50%] flex flex-col border-b sm:border-b-0 sm:border-r border-gray-600 sm:h-full sm:overflow-hidden">
+        <div id="editorPreviewWrapper">
+            <!-- Editor pane -->
+            <div id="textarea-heading" class="border-b sm:border-b-0 sm:border-r border-gray-600 sm:w-1/2">
                 <span
                     class="w-full bg-[#101922] h-8 sm:h-10 flex justify-between items-center px-3 sm:px-4 text-[0.7rem] sm:text-sm text-blue-200 flex-shrink-0 border-b border-gray-700">
                     <p class="font-semibold">EDITOR</p>
                     <p class="text-[0.65rem] sm:text-xs">UTF-8 Markdown</p>
                 </span>
-                <textarea name="" id="editor"
-                    class="w-full bg-transparent border-none text-white outline-none p-3 text-[0.85rem] sm:text-base resize-none min-h-[50vh] sm:min-h-0 sm:flex-1 sm:overflow-auto"></textarea>
+                <textarea id="editor"
+                    class="w-full bg-transparent border-none text-white outline-none p-3 text-[0.85rem] sm:text-base"></textarea>
             </div>
 
-            <!-- Preview -->
-            <div id="iframe-heading"
-                class="w-full sm:w-[50%] flex flex-col sm:h-full sm:overflow-hidden">
+            <!-- Preview pane -->
+            <div id="iframe-heading" class="sm:w-1/2">
                 <span
                     class="w-full bg-gray-300 h-8 sm:h-10 px-3 sm:px-4 flex justify-between items-center text-[0.7rem] sm:text-sm flex-shrink-0 border-b border-gray-400">
                     <p class="text-gray-600 font-semibold">LIVE PREVIEW</p>
@@ -177,13 +227,13 @@
                         <i class="fa-solid fa-up-right-from-square"></i>
                     </button>
                 </span>
-                <iframe id="livePreview" class="w-full bg-white border-none min-h-[50vh] sm:min-h-0 sm:flex-1"></iframe>
+                <iframe id="livePreview" class="w-full bg-white"></iframe>
             </div>
         </div>
 
         <!-- Toolbar -->
         <div id="toolBar"
-            class="gap-1 sm:gap-4 md:gap-5 flex flex-wrap bg-[#101922] text-white p-2 sm:p-3 md:p-4 justify-center items-center w-[95vw] sm:w-auto rounded-xl md:fixed md:bottom-[20px] md:right-[20px] border border-[#1e293b] flex-shrink-0 mt-2 sm:mt-0 md:mt-0">
+            class="gap-1 sm:gap-4 md:gap-5 flex flex-wrap bg-[#101922] text-white p-2 sm:p-3 md:p-4 justify-center items-center w-full rounded-xl border border-[#1e293b] flex-shrink-0">
             <button class="toolbar-btn text-[0.65rem] sm:text-[0.75rem] md:text-base p-1 sm:p-2 md:p-3 sm:flex-auto hover:bg-gray-700 hover:text-blue-300 rounded transition-colors active:bg-gray-800"
                 data-action="bold" title="Bold">
                 <i class="fa-solid fa-bold"></i>
