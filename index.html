@@ -117,6 +117,7 @@
 
     <!-- EDITOR HOME PAGE -->
     <section id="editorHomePage" class="hidden flex w-full z-30">
+        
         <div id="sideBar"
             class="border-[1px] border-l border-[#102336] p-3 w-[20%] hidden sticky left-0 top-0 sm:flex sm:flex-col sm:justify-between sm:h-[100vh]">
             <div class="flex gap-x-4">
@@ -161,7 +162,17 @@
                     <button class="bg-transparent text-blue-500" type="button" id="clearAll">Clear All</button>
                 </span>
             </div>
-
+            <section id="deleteForm" class="flex column gap h-[100dvh] w-full fixed z-10001">
+            <div class="deleteContainer flex flex-col gap-[20px] w-[440px] h-[330px] bg-[#101922] rounded-xl">
+                <div class="w-[50px] h-[50px] z-1 rounded-full"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <h2 class="font-extrabold text-[1.5rem] line-[1.75rem]">Clear section?</h2>
+                <p class="align-justify py-0 px-[50px]">Are you sure you want to clear all tasks in this section? This action cannot be undone and will permanently remove all associated data.</p>
+                <div class="flex row gap-[10px]" style="margin: 0;">
+                    <button type="button" class="cancelDelete"> <i class="fa-solid fa-xmark text-red z-2 text-[1.875rem]"></i></button>
+                    <button type="button" class="confirmDelete flex row">Delete <i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        </section>
             <div id="files" class="flex flex-wrap justify-start gap-4"></div>
 
             <div id="newFile"
