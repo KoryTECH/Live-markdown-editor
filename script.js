@@ -1,7 +1,7 @@
 "use strict";
 // to do
-// Finish the ui refurbishing
-
+// delete vlidation
+// some other features
 // get elements for easy access
 const homePage = document.getElementById("editorHomePage");
 const markdownPage = document.getElementById("markdownInterface");
@@ -25,9 +25,13 @@ const backButton = document.getElementById("backButton");
 const clearAll = document.getElementById("clearAll");
 const modalCloseBtn = document.getElementById("modalCloseBtn");
 const notification = document.getElementById("notification");
+const deleteForm = document.getElementById("deleteForm");
+const canceldeleteBtn = document.querySelector(".cancel-delete");
+const confirmDeleteBtn = document.querySelector(".confirm-delete");
 let deleteButton;
 let editButton;
 let currentFileId = null;
+deleteForm.classList.add("hidden");
 
 
 markdownPage.classList.add("hidden");
@@ -359,13 +363,21 @@ fileContainer.addEventListener("click", (event) => {
     reaccessingFiles({ target: fileCard });
   }
   if(event.target.closest('#deleteButton')){
-    const fileNameToDelete = event.target.closest("#fileCard").querySelector("#savedFileName").textContent;
-    const fileToDelete = files.find(f => f.name === fileNameToDelete);
-    files = files.filter(f => f.id !== fileToDelete.id);
+    deleteForm.classList.remove("hidden");
+    confirmDeleteBtn.addEventListener("click" ,function(){
+      let fileNameToDelete = event.target.closest("#fileCard").querySelector("#savedFileName").textContent;
+      let fileToDelete = files.find(f => f.name === fileNameToDelete);
+      files = files.filter(f => f.id !== fileToDelete.id);
     
-    localStorage.setItem("files", JSON.stringify(files));
-    displayingFile(files);
-    showNotification("File deleted successfully!");
+      localStorage.setItem("files", JSON.stringify(files));
+      displayingFile(files);
+      showNotification("File deleted successfully!");
+    })
+    canceldeleteBtn.addEventListener("click", function(){
+      deleteForm.classList.add("hidden");
+      displayingFile(files);
+    })
+    
   }
 });
 
