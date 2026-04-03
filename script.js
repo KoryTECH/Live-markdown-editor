@@ -369,19 +369,18 @@ fileContainer.addEventListener("click", (event) => {
     // Store the file name for confirmation later
     deleteForm.dataset.fileToDelete = fileNameToDelete;
   }
-});
+  });
 
-confirmDeleteBtn.addEventListener("click", function(){
-  const fileNameToDelete = deleteForm.dataset.fileToDelete;
-  files = files.filter(file => file.name !== fileNameToDelete);
-  localStorage.setItem("files", JSON.stringify(files));
-  displayingFile(files);
-  deleteForm.classList.add("hidden");
-  showNotification("File deleted successfully!");
-});
-
+  confirmDeleteBtn.addEventListener("click", function(){
+    const fileNameToDelete = deleteForm.dataset.fileToDelete;
+    files = files.filter(file => file.name !== fileNameToDelete);
+    localStorage.setItem("files", JSON.stringify(files));
+    displayingFile(files);
+    deleteForm.classList.add("hidden");
+    showNotification("File deleted successfully!");
+  });
 canceldeleteBtn.addEventListener("click", function(){
   deleteForm.classList.add("hidden");
-});
+})
 
 localStorage.getItem("files");
