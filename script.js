@@ -26,8 +26,8 @@ const clearAll = document.getElementById("clearAll");
 const modalCloseBtn = document.getElementById("modalCloseBtn");
 const notification = document.getElementById("notification");
 const deleteForm = document.getElementById("deleteForm");
-const canceldeleteBtn = document.querySelector(".cancel-delete");
-const confirmDeleteBtn = document.querySelector(".confirm-delete");
+const canceldeleteBtn = document.querySelector(".cancelDelete");
+const confirmDeleteBtn = document.querySelector(".confirmDelete");
 let deleteButton;
 let editButton;
 let currentFileId = null;
@@ -363,22 +363,25 @@ fileContainer.addEventListener("click", (event) => {
     reaccessingFiles({ target: fileCard });
   }
   if(event.target.closest('#deleteButton')){
+    const fileCard = event.target.closest("#fileCard");
+    const fileNameToDelete = fileCard.querySelector("#savedFileName").textContent;
     deleteForm.classList.remove("hidden");
-    confirmDeleteBtn.addEventListener("click" ,function(){
-      let fileNameToDelete = event.target.closest("#fileCard").querySelector("#savedFileName").textContent;
-      let fileToDelete = files.find(f => f.name === fileNameToDelete);
-      files = files.filter(f => f.id !== fileToDelete.id);
-    
-      localStorage.setItem("files", JSON.stringify(files));
-      displayingFile(files);
-      showNotification("File deleted successfully!");
-    })
-    canceldeleteBtn.addEventListener("click", function(){
-      deleteForm.classList.add("hidden");
-      displayingFile(files);
-    })
-    
+    // Store the file name for confirmation later
+    deleteForm.dataset.fileToDelete = fileNameToDelete;
   }
+});
+
+confirmDeleteBtn.addEventListener("click", function(){
+  const fileNameToDelete = deleteForm.dataset.fileToDelete;
+  files = files.filter(file => file.name !== fileNameToDelete);
+  localStorage.setItem("files", JSON.stringify(files));
+  displayingFile(files);
+  deleteForm.classList.add("hidden");
+  showNotification("File deleted successfully!");
+});
+
+canceldeleteBtn.addEventListener("click", function(){
+  deleteForm.classList.add("hidden");
 });
 
 localStorage.getItem("files");
