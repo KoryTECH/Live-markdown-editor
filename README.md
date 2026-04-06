@@ -1,101 +1,120 @@
-# Scribe — Live Markdown Editor
+# MarkdownStudio
 
-A browser-based live Markdown editor with real-time preview, document management, and local storage support.
-
-**Live Demo:** [korytech.github.io/Live-markdown-editor](https://korytech.github.io/Live-markdown-editor/)
+A lightweight, browser-based markdown editor with live preview and local file management. Write, edit, and format markdown documents all in one place with an intuitive split-screen interface.
 
 ---
 
 ## Features
 
-- **Live Preview** — See your rendered Markdown update in real time as you type
-- **Document Management** — Create, save, and switch between multiple documents
-- **Local Storage** — Documents persist in your browser between sessions
-- **Recent Documents** — Quickly access previously edited files from the dashboard
-- **Onboarding Flow** — First-time setup screen to personalize your workspace
+- **Live Preview** — Real-time markdown preview that updates as you type
+- **Split-Screen Interface** — Editor on the left, rendered preview on the right
+- **Document Management** — Create, save, edit, and delete markdown files
+- **Search Functionality** — Search through saved files by name with instant filtering
+- **Formatting Toolbar** — Quick-access buttons for bold, italic, headings, lists, code blocks, links, and images
+- **Local Storage** — All files persist in browser storage across sessions
+- **User Personalization** — Welcome screen stores and displays your name
+- **Toast Notifications** — Real-time feedback for all user actions
+- **File Export** — Download markdown files for external use
+- **Responsive Design** — Optimized for both mobile and desktop viewing
 - **UTF-8 Support** — Full Unicode character support
-- **Clean Split-View UI** — Editor on the left, preview on the right
 
 ---
 
 ## Getting Started
 
-### Prerequisites
+### How to Use
 
-> _TODO: List any dependencies or requirements (e.g. Node.js version, package manager)_
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/KoryTech/Live-markdown-editor.git
-
-# Navigate into the project
-cd Live-markdown-editor
-
-# Install dependencies
-# TODO: add install command (e.g. npm install)
-
-# Start the development server
-# TODO: add start command (e.g. npm run dev)
-```
-
-Then open your browser and visit `http://localhost:3000` (or whichever port is configured).
+1. Open the application in your web browser
+2. Enter your name in the welcome modal to set up your workspace
+3. Click "New document" to create a markdown file
+4. Write markdown syntax in the editor pane on the left
+5. View the live-rendered preview on the right side in real time
+6. Use the formatting toolbar buttons for quick text formatting
+7. Enter a filename and click "Save" to store your document in local storage
+8. Return to the home page to view all your saved documents
+9. Search files by name using the search bar
+10. Click on any file card to edit it, or use the delete button to remove files
 
 ---
 
-## Usage
+## Formatting Toolbar
 
-1. On first launch, enter your name to set up your workspace.
-2. Click **+ New Document** to create a file.
-3. Write Markdown in the left **Editor** panel.
-4. See the rendered output update live in the **Preview** panel.
-5. Your documents are automatically saved to local storage.
+The toolbar provides quick access to common markdown formatting:
+
+- **Bold** — `**text**`
+- **Italic** — `*text*`
+- **Heading 1** — `# text`
+- **Heading 2** — `## text`
+- **Unordered List** — `* item`
+- **Ordered List** — `1. item`
+- **Code Block** — Triple backticks with code inside
+- **Link** — `[text](url)`
+- **Image** — `![alt text](image-url)`
 
 ---
 
 ## Tech Stack
 
-> _TODO: Fill in the technologies used_
-
-- **Frontend:** <!-- e.g. HTML, CSS, Vanilla JS / React / Vue -->
-- **Markdown Parser:** <!-- e.g. marked.js, markdown-it -->
-- **Storage:** Browser `localStorage`
-- **Build Tool:** <!-- e.g. Vite, Webpack, none -->
+- **Frontend:** HTML5, CSS3 (with Tailwind CSS), Vanilla JavaScript
+- **Markdown Parser:** Marked.js library
+- **Icons:** Font Awesome 6.5.1
+- **Storage:** Browser `localStorage` API
+- **Build Tool:** MSBuild
 
 ---
 
 ## Project Structure
 
 ```
-Live-markdown-editor/
-├── index.html
-├── src/
-│   ├── ...         # TODO: document structure
-├── public/
-└── README.md
+live-markdown/
+├── index.html              # Main HTML structure
+├── script.js               # Application logic and interactivity
+├── style.css               # Additional styling
+├── output.css              # Compiled Tailwind CSS
+├── tailwind.config.js      # Tailwind configuration
+├── package.json            # Project dependencies
+└── README.md               # This file
 ```
 
 ---
 
-## Contributing
+## Local Storage
 
-Contributions are welcome! To get started:
-
-1. Fork the repository
-2. Create a new branch: `git checkout -b feature/your-feature-name`
-3. Make your changes and commit: `git commit -m "Add your feature"`
-4. Push to your branch: `git push origin feature/your-feature-name`
-5. Open a Pull Request
+- Files are stored in browser localStorage under the key "files"
+- Username is stored under the key "username"
+- Each file object contains: id, name, content, and date created
+- Data persists across browser sessions
+- Clearing browser cache/cookies will remove all saved documents
 
 ---
 
-## License
+## Live Preview Styling
 
-> _TODO: Add license information (e.g. MIT, Apache 2.0)_
+The preview pane applies custom styling to markdown elements:
+
+- Color-coded syntax for code blocks
+- Styled blockquotes with left border
+- Responsive typography for headers
+- Link styling with hover effects
+- Support for both light and dark theme rendering
 
 ---
 
-## Acknowledgements
+## Browser Compatibility
 
-> _TODO: Credit any libraries, tools, or inspiration sources used_
+Works in all modern browsers that support:
+
+- ES6 JavaScript
+- HTML5 `localStorage` API
+- CSS Grid and Flexbox
+- Modern DOM APIs (querySelector, classList, etc.)
+
+---
+
+## Features Roadmap
+
+- Delete validation feature
+- Additional markdown formatting options
+- Theme customization
+- Export to multiple file formats
+- Cloud storage integration
