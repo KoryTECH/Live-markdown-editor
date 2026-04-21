@@ -326,11 +326,49 @@ newFileButtons.forEach((btn) =>
   btn.addEventListener("click", () => createNewFilefunc())
 );
 
-clearAll.addEventListener("click", function(){
-  files = [];
+clearAll.addEventListener("click", function () {
+  deleteForm.dataset.action = "clearAll";
+  deleteForm.dataset.fileToDelete = "";
+  deleteForm.classList.remove("hidden");
+});
+
+fileContainer.addEventListener("click", (event) => {
+  if (event.target.closest("#editButton")) {
+    const fileCard = event.target.closest("#fileCard");
+    reaccessingFiles({ target: fileCard });
+  }
+
+  if (event.target.closest("#deleteButton")) {
+    const fileCard = event.target.closest("#fileCard");
+    const fileNameToDelete = fileCard.querySelector("#savedFileName").textContent;
+    deleteForm.dataset.action = "deleteOne";
+    deleteForm.dataset.fileToDelete = fileNameToDelete;
+    deleteForm.classList.remove("hidden");
+  }
+});
+
+confirmDeleteBtn.addEventListener("click", function () {
+  if (deleteForm.dataset.action === "clearAll") {
+    files = [];
+    showNotification("All files cleared!");
+  } else {
+    const fileNameToDelete = deleteForm.dataset.fileToDelete;
+    files = files.filter((file) => file.name !== fileNameToDelete);
+    showNotification("File deleted successfully!");
+  }
+
+  localStorage.setItem("files", JSON.stringify(files));
   displayingFile(files);
-  showNotification("All files cleared!");
-})
+  deleteForm.classList.add("hidden");
+  deleteForm.dataset.action = "";
+  deleteForm.dataset.fileToDelete = "";
+});
+
+canceldeleteBtn.addEventListener("click", function () {
+  deleteForm.classList.add("hidden");
+  deleteForm.dataset.action = "";
+  deleteForm.dataset.fileToDelete = "";
+});
 
 if (backButton) {
   backButton.addEventListener("click", function() {
