@@ -1,7 +1,7 @@
 "use strict";
 // to do
-// delete vlidation
-// some other features
+// Download 
+// multiple card ui fix
 // get elements for easy access
 const homePage = document.getElementById("editorHomePage");
 const markdownPage = document.getElementById("markdownInterface");
@@ -56,6 +56,8 @@ function createNewFilefunc() {
   markdownPage.classList.remove("hidden");
   //   make textarea blank for new file
   editor.value = "";
+  preview.value = "";
+  newFileName = "";
   showNotification("New file created!");
 }
 
